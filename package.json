@@ -12,7 +12,10 @@
 		"type": "git",
 		"url": "git+https://github.com/karmatheory/front-end.git"
 	},
-	"keywords": [ "karmatheory", "timebanking" ],
+	"keywords": [
+		"karmatheory",
+		"timebanking"
+	],
 	"author": "kishorelal sivachandran",
 	"license": "ISC",
 	"bugs": {
