@@ -1,0 +1,23 @@
+{
+  "name": "karmatheory",
+  "version": "1.0.0",
+  "description": "An app based on Timebanking",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karmatheory/front-end.git"
+  },
+  "keywords": [
+    "karmatheory",
+    "timebanking"
+  ],
+  "author": "kishorelal sivachandran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karmatheory/front-end/issues"
+  },
+  "homepage": "https://github.com/karmatheory/front-end#readme"
+}
