@@ -4,7 +4,7 @@
 	"description": "An app based on Timebanking",
 	"type": "module",
 	"scripts": {
-		"start": "vite",
+		"start": "vite --port 8080",
 		"prod-build": "vite build",
 		"preview": "vite preview"
 	},
@@ -12,10 +12,7 @@
 		"type": "git",
 		"url": "git+https://github.com/karmatheory/front-end.git"
 	},
-	"keywords": [
-		"karmatheory",
-		"timebanking"
-	],
+	"keywords": [ "karmatheory", "timebanking" ],
 	"author": "kishorelal sivachandran",
 	"license": "ISC",
 	"bugs": {
@@ -25,10 +22,12 @@
 	"dependencies": {
 		"axios": "^0.27.2",
 		"bootstrap": "^5.2.1",
+		"gapi-script": "^1.2.0",
 		"lodash": "^4.17.21",
 		"prop-types": "^15.8.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
+		"react-google-login": "^5.2.2",
 		"react-redux": "^8.0.2",
 		"react-router": "^6.4.0",
 		"react-router-dom": "^6.4.0",
