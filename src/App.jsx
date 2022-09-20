@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import _get from 'lodash/get';
 import { load } from 'react-cookies';
 import { setSession } from './services/session/action';
+import SeekForHelp from './pages/seekForHelp';
+import CreateEvent from './pages/createEvent';
 
 const App = () => {
 	const { isSignedIn } = useSelector(({ sessionReducer }) => {
@@ -40,6 +42,8 @@ const App = () => {
 					<div className="mt-5">
 						<Routes>
 							<Route path="/" element={<div>ula vanten</div>} />
+							<Route path="/createHelp" element={<SeekForHelp />} />
+							<Route path="/createEvent" element={<CreateEvent />} />
 							<Route path="*" element={<Navigate to={'/'} replace />} />
 						</Routes>
 					</div>

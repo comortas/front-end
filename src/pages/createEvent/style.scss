@@ -1,0 +1,7 @@
+@import './../../assets/css/mixins';
+.create-event {
+	&::before {
+		@include background-graded-image;
+		background-image: url('../../assets/images/event-create.svg');
+	}
+}
