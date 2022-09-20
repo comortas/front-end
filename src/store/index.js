@@ -1,11 +1,13 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-
+import { sessionReducer } from '../services/session/reducer';
 /**
  * combineReducers is simply a utility function to simplify the most common use case when writing Redux reducers.
  * It takes an object full of slice reducer functions, and returns a new reducer function
  */
-const appReducer = combineReducers({});
+const appReducer = combineReducers({
+	sessionReducer
+});
 
 /**
  * Creates a Redux store that holds the complete state tree of your app.

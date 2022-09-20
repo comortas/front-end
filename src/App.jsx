@@ -1,60 +1,59 @@
 import React, { useEffect } from 'react';
-import { Route, Routes } from 'react-router';
-import { Button, Card, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Button, Card, CardBody, CardTitle, CardSubtitle, CardText, Container } from 'reactstrap';
 import { gapi } from 'gapi-script';
 import './assets/css/kt.scss';
 import Header from './components/header';
 import Login from './components/login';
 import { clientId } from './utils/constants';
+import { useGoogleLogin } from 'react-google-login';
+import { useSelector } from 'react-redux';
+import _get from 'lodash/get';
 
 const App = () => {
+	const { isSignedIn } = useSelector(({ sessionReducer }) => {
+		return {
+			isSignedIn: _get(sessionReducer, 'session.id_token', false)
+		};
+	});
+	console.log('isSignedIn: ', isSignedIn);
+
 	useEffect(() => {
 		gapi.load('client:auth2', start);
 	}, []);
+
 	const start = () => {
 		gapi.client.init({
 			clientId,
 			scope: ''
 		});
 	};
+
+	const renderSection = () => {
+		if (isSignedIn) {
+			return (
+				<React.Fragment>
+					<Header />
+					<Container>
+						<Routes>
+							<Route path="/" element={<div>ula vanten</div>} />
+							<Route path="*" element={<Navigate to={'/'} replace />} />
+						</Routes>
+					</Container>
+				</React.Fragment>
+			);
+		} else {
+			return (
+				<Routes>
+					<Route path="/login" element={<Login />} />
+					<Route path="*" element={<Navigate to={'login'} replace />} />
+				</Routes>
+			);
+		}
+	};
 	return (
 		<div>
-			<Header />
-			<Routes>
-				<Route path="/login" element={<Login />} />
-				<Route
-					path="/"
-					element={
-						<div
-							className="d-flex align-items-center justify-content-center flex-column"
-							style={{ height: '100vh' }}
-						>
-							<h2>Welcome to KarmaTheory!</h2>
-							<div>
-								<Button>Login</Button>
-							</div>
-							<Card
-								className="mt-3"
-								style={{
-									width: '18rem'
-								}}
-							>
-								<CardBody>
-									<CardTitle tag="h5">Card title</CardTitle>
-									<CardSubtitle className="mb-2 text-muted" tag="h6">
-										Card subtitle
-									</CardSubtitle>
-									<CardText>
-										Some quick example text to build on the card title and make up the bulk of the
-										card‘s content.
-									</CardText>
-									<Button>Button</Button>
-								</CardBody>
-							</Card>
-						</div>
-					}
-				/>
-			</Routes>
+			<div className="mt-5">{renderSection()}</div>
 		</div>
 	);
 };
