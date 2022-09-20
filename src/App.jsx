@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Button, Card, CardBody, CardTitle, CardSubtitle, CardText, Container } from 'reactstrap';
+import { Container } from 'reactstrap';
 import { gapi } from 'gapi-script';
 import './assets/css/kt.scss';
 import Header from './components/header';
-import Login from './components/login';
+import Login from './pages/login';
 import { clientId } from './utils/constants';
-import { useGoogleLogin } from 'react-google-login';
+import LandingPage from './pages/landingPage';
 import { useSelector } from 'react-redux';
 import _get from 'lodash/get';
 
@@ -46,16 +46,13 @@ const App = () => {
 			return (
 				<Routes>
 					<Route path="/login" element={<Login />} />
-					<Route path="*" element={<Navigate to={'login'} replace />} />
+					<Route path="/" element={<LandingPage />} />
+					<Route path="*" element={<Navigate to={'/'} replace />} />
 				</Routes>
 			);
 		}
 	};
-	return (
-		<div>
-			<div className="mt-5">{renderSection()}</div>
-		</div>
-	);
+	return <div className="mt-5">{renderSection()}</div>;
 };
 
 export default App;
