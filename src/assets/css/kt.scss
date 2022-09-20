@@ -3,10 +3,18 @@
 $font-family-sans-serif: 'Rubik', sans-serif;
 $border-radius: 20px !default;
 $spacer: 1.5rem !default;
+$dropdown-padding-y: 1rem !default;
 $primary: #ed7b7b;
 
 @import 'bootstrap/scss/bootstrap';
 
-.kt_content {
-	margin-top: 75px;
+.kt-media {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	.kt-body {
+		margin-right: 10px;
+		margin-left: 10px;
+	}
 }

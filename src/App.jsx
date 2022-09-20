@@ -6,8 +6,10 @@ import Header from './components/header';
 import Login from './pages/login';
 import { clientId } from './utils/constants';
 import LandingPage from './pages/landingPage';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import _get from 'lodash/get';
+import { load } from 'react-cookies';
+import { setSession } from './services/session/action';
 
 const App = () => {
 	const { isSignedIn } = useSelector(({ sessionReducer }) => {
@@ -15,10 +17,12 @@ const App = () => {
 			isSignedIn: _get(sessionReducer, 'session.id_token', false)
 		};
 	});
-	console.log('isSignedIn: ', isSignedIn);
-
+	const dispatch = useDispatch();
 	useEffect(() => {
 		gapi.load('client:auth2', start);
+		if (load('session')) {
+			dispatch(setSession(load('session')));
+		}
 	}, []);
 
 	const start = () => {
