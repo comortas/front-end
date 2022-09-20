@@ -7,6 +7,13 @@ $primary: #ed7b7b;
 
 @import 'bootstrap/scss/bootstrap';
 
-.kt_content {
-	margin-top: 75px;
+.kt-media {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	.kt-body {
+		margin-right: 10px;
+		margin-left: 10px;
+	}
 }
