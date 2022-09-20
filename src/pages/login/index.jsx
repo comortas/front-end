@@ -1,6 +1,7 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { Col, Container, Row } from 'reactstrap';
+import LogoBanner from '../../components/logo-banner';
 import { clientId } from '../../utils/constants';
 import loginImg from './../../assets/images/login-illustration.svg';
 
@@ -10,19 +11,26 @@ const Login = () => {
 	};
 	return (
 		<Container fluid="xl">
-			<Row className="mt-5 pt-5 align-items-center">
+			<Row>
 				<Col>
-					<img src={loginImg} width="400" />
+					<LogoBanner />
 				</Col>
-				<Col>
-					<h4>
-						Getting Started<br />
-						<small className="text-muted">
+			</Row>
+			<Row className="my-5 align-items-center">
+				<Col xs="6">
+					<img src={loginImg} width="100%" />
+				</Col>
+				<Col xs="6">
+					<h4>Getting Started</h4>
+					<h5>
+						<small className="text-muted fw-normal">
 							We have integrated the single sign on feature to enable the user get into the application
 							faster & use it on the first attempt
 						</small>
-					</h4>
+					</h5>
+
 					<GoogleLogin
+						className="mt-2"
 						clientId={clientId}
 						buttonText="Sign in with Google"
 						onSuccess={responseGoogle}

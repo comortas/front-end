@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Container } from 'reactstrap';
 import { gapi } from 'gapi-script';
 import './assets/css/kt.scss';
 import Header from './components/header';
@@ -34,25 +33,27 @@ const App = () => {
 			return (
 				<React.Fragment>
 					<Header />
-					<Container>
+					<div className="mt-5">
 						<Routes>
 							<Route path="/" element={<div>ula vanten</div>} />
 							<Route path="*" element={<Navigate to={'/'} replace />} />
 						</Routes>
-					</Container>
+					</div>
 				</React.Fragment>
 			);
 		} else {
 			return (
-				<Routes>
-					<Route path="/login" element={<Login />} />
-					<Route path="/" element={<LandingPage />} />
-					<Route path="*" element={<Navigate to={'/'} replace />} />
-				</Routes>
+				<div style={{ marginTop: '168px' }}>
+					<Routes>
+						<Route path="/login" element={<Login />} />
+						<Route path="/" element={<LandingPage />} />
+						<Route path="*" element={<Navigate to={'/'} replace />} />
+					</Routes>
+				</div>
 			);
 		}
 	};
-	return <div className="mt-5">{renderSection()}</div>;
+	return <div>{renderSection()}</div>;
 };
 
 export default App;
