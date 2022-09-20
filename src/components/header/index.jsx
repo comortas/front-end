@@ -11,7 +11,7 @@ const Header = () => {
 	return (
 		<div>
 			<Navbar expand="md" fixed="top" color="light">
-				<NavLink className={'navbar-brand'} href="/">
+				<NavLink className={'navbar-brand'} to="/">
 					<img src={logo} width="120" />
 				</NavLink>
 				<NavbarToggler onClick={toggle} />
