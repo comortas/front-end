@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import {
@@ -20,6 +20,7 @@ import { GoogleLogout } from 'react-google-login';
 import { clientId } from '../../utils/constants';
 import './style.scss';
 import { removeSession } from '../../services/session/action';
+import _isEmpty from 'lodash/isEmpty';
 
 const Header = () => {
 	const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const Header = () => {
 	const onFailure = (res) => {
 		console.log('onFailure: ', res);
 	};
-
+	if (_isEmpty(userInfo)) return null;
 	return (
 		<div className="kt-header">
 			<Navbar expand="md" fixed="top" color="light">

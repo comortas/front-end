@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import _get from 'lodash/get';
 import { load } from 'react-cookies';
 import { setSession } from './services/session/action';
+import Maps from './components/maps';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 	const { isSignedIn } = useSelector(({ sessionReducer }) => {
@@ -40,7 +42,7 @@ const App = () => {
 					<Header />
 					<Container>
 						<Routes>
-							<Route path="/" element={<div>ula vanten</div>} />
+							<Route exact path="/" element={<Maps />} />
 							<Route path="*" element={<Navigate to={'/'} replace />} />
 						</Routes>
 					</Container>
