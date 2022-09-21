@@ -17,8 +17,10 @@ import SeekForHelp from './pages/seekForHelp';
 import CreateEvent from './pages/createEvent';
 import Maps from './components/maps';
 // Styles
+import 'react-widgets/scss/styles.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/css/kt.scss';
+import Homepage from './pages/homepage';
 
 const App = () => {
 	const { isSignedIn } = useSelector(({ sessionReducer }) => {
@@ -48,7 +50,7 @@ const App = () => {
 					<Header />
 					<div className="mt-5">
 						<Routes>
-							<Route exact path="/" element={<Maps />} />
+							<Route exact path="/" element={<Homepage />} />
 							<Route path="/createHelp" element={<SeekForHelp />} />
 							<Route path="/createEvent" element={<CreateEvent />} />
 							<Route path="*" element={<Navigate to={'/'} replace />} />

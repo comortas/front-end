@@ -4,10 +4,11 @@ import { Button, Col, Container, Row } from 'reactstrap';
 import LogoBanner from '../../components/logo-banner';
 import serviceImg from './../../assets/images/service.png';
 import communityImg from './../../assets/images/community.jpg';
+import './style.scss';
 
 const LandingPage = () => {
 	return (
-		<Container fluid="xl">
+		<Container className="landing-page" fluid="xl">
 			<Row>
 				<Col>
 					<LogoBanner />

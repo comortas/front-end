@@ -43,7 +43,7 @@ const Header = () => {
 	if (_isEmpty(userInfo)) return null;
 	return (
 		<div className="kt-header">
-			<Navbar expand="md" fixed="top" color="light">
+			<Navbar expand="md" fixed="top" color="light" className="shadow-sm">
 				<NavLink className={'navbar-brand'} to="/">
 					<img src={logo} width="120" />
 				</NavLink>

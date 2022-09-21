@@ -12,7 +12,10 @@
 		"type": "git",
 		"url": "git+https://github.com/karmatheory/front-end.git"
 	},
-	"keywords": [ "karmatheory", "timebanking" ],
+	"keywords": [
+		"karmatheory",
+		"timebanking"
+	],
 	"author": "kishorelal sivachandran",
 	"license": "ISC",
 	"bugs": {
@@ -34,7 +37,9 @@
 		"react-redux": "^8.0.2",
 		"react-router": "^6.4.0",
 		"react-router-dom": "^6.4.0",
+		"react-timekeeper": "^2.2.1",
 		"react-toastify": "^9.0.8",
+		"react-widgets": "^5.8.4",
 		"reactstrap": "^9.1.4",
 		"redux": "^4.2.0",
 		"redux-persist": "^6.0.0",
