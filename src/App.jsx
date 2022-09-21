@@ -1,17 +1,24 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { gapi } from 'gapi-script';
-import './assets/css/kt.scss';
-import Header from './components/header';
-import Login from './pages/login';
-import { clientId } from './utils/constants';
-import LandingPage from './pages/landingPage';
 import { useDispatch, useSelector } from 'react-redux';
 import _get from 'lodash/get';
 import { load } from 'react-cookies';
+
+// Utilis
+import { clientId } from './utils/constants';
+// Actions
 import { setSession } from './services/session/action';
+// Components
+import Header from './components/header';
+import Login from './pages/login';
+import LandingPage from './pages/landingPage';
 import SeekForHelp from './pages/seekForHelp';
 import CreateEvent from './pages/createEvent';
+import Maps from './components/maps';
+// Styles
+import 'react-toastify/dist/ReactToastify.css';
+import './assets/css/kt.scss';
 
 const App = () => {
 	const { isSignedIn } = useSelector(({ sessionReducer }) => {
@@ -41,7 +48,7 @@ const App = () => {
 					<Header />
 					<div className="mt-5">
 						<Routes>
-							<Route path="/" element={<div>ula vanten</div>} />
+							<Route exact path="/" element={<Maps />} />
 							<Route path="/createHelp" element={<SeekForHelp />} />
 							<Route path="/createEvent" element={<CreateEvent />} />
 							<Route path="*" element={<Navigate to={'/'} replace />} />
