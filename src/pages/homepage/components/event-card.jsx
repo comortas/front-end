@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 
 const EventCard = ({ data }) => {
 	console.log('data: ', data);
-	const { name, description, _id, location, date, noOfVolunteers, duration, createdBy, status } = data;
+	const { name, description, _id, location, date, noOfVolunteers, duration, createdBy, status, communityId } = data;
 	const { userInfo } = useSelector(({ userDetailsReducer }) => {
 		return {
 			userInfo: _get(userDetailsReducer, 'response.user', false)
@@ -32,10 +32,13 @@ const EventCard = ({ data }) => {
 	};
 	return (
 		<Col key={_id} xs={12} md={6} lg={4} className="mb-3">
-			<Card>
+			<Card className="event-card">
 				<img src={poster} style={{ borderRadius: '20px 20px 0px 0px' }} />
 				<CardBody>
 					<h4>{name}</h4>
+					<Button outline size="sm">
+						{communityId ? 'Community' : 'Individual'}
+					</Button>
 					<p>
 						{description}
 						<br />

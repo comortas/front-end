@@ -98,7 +98,12 @@ const CreateCommunity = () => {
 										</FormGroup>
 										<FormGroup>
 											<Label>Location</Label>
-											<Input name="location" onChange={handleChange} value={values.location} />
+											<Input
+												name="location"
+												disabled
+												onChange={handleChange}
+												value={values.location}
+											/>
 											<Button onClick={toggle} className="mt-2">
 												Add Location
 											</Button>
