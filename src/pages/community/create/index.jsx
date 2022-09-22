@@ -1,16 +1,41 @@
 import { useFormik } from 'formik';
-import React from 'react';
-import { Container, Row, Col, Card, CardBody, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import React, { useState } from 'react';
+import {
+	Container,
+	Row,
+	Col,
+	Card,
+	CardBody,
+	Form,
+	FormGroup,
+	Label,
+	Input,
+	Button,
+	Modal,
+	ModalHeader,
+	ModalBody,
+	ModalFooter
+} from 'reactstrap';
 import Calendar from 'react-widgets/Calendar';
 import TimeKeeper from 'react-timekeeper';
 import './style.scss';
 import formImg from './../../../assets/images/add.svg';
 import { NavLink } from 'react-router-dom';
+import Maps from '../../../components/maps';
+import API_CALL from '../../../services';
+import { useSelector } from 'react-redux';
+import _get from 'lodash/get';
 
 const CreateCommunity = () => {
+	const { userInfo } = useSelector(({ userDetailsReducer }) => {
+		return {
+			userInfo: _get(userDetailsReducer, 'response.user', false)
+		};
+	});
+	const [ locationModal, setLocationModal ] = useState(false);
 	const { handleChange, handleSubmit, setFieldValue, values } = useFormik({
 		initialValues: {
-			type: 'help',
+			type: 'event', // event | help
 			location: '',
 			name: '',
 			description: '',
@@ -19,12 +44,36 @@ const CreateCommunity = () => {
 			duration: '',
 			poc: '',
 			noOfVolunteers: '',
-			preferredGender: ''
+			preferredGender: '',
+			latitude: '',
+			longitude: '',
+			createdBy: userInfo._id,
+			admin: userInfo._id
 		},
 		onSubmit: (values) => {
 			console.log(values);
+			API_CALL('post', 'community', values, null, ({ data, status }) => {
+				console.log('data: ', data);
+				if (status === 200) {
+					console.log('status: ', status);
+				}
+			});
 		}
 	});
+
+	const toggle = () => {
+		setLocationModal(!locationModal);
+	};
+	const parsedLocation = (data) => {
+		toggle();
+		console.log('parsedLocation data: ', data);
+		if (data) {
+			const { latitude, longitude, location } = data;
+			setFieldValue('location', location);
+			setFieldValue('latitude', latitude);
+			setFieldValue('longitude', longitude);
+		}
+	};
 	return (
 		<Container className="create-community">
 			<Row>
@@ -87,6 +136,15 @@ const CreateCommunity = () => {
 										<FormGroup>
 											<Label>Location</Label>
 											<Input name="location" onChange={handleChange} value={values.location} />
+											<Button onClick={toggle} className="mt-2">
+												Add Location
+											</Button>
+											<Modal isOpen={locationModal} toggle={toggle} fullscreen>
+												<ModalHeader toggle={toggle}>Add Location</ModalHeader>
+												<ModalBody>
+													<Maps callBack={(data) => parsedLocation(data)} />
+												</ModalBody>
+											</Modal>
 										</FormGroup>
 										<FormGroup>
 											<Label>Point of Contact</Label>

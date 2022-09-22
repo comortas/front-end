@@ -1,3 +1,10 @@
-.kt-map {
-	height: calc(100vh - 113px);
+.kt-map-conatiner {
+	.kt-map {
+		height: 500px;
+	}
+	.kt-action {
+		display: flex;
+		justify-content: end;
+		margin-top: 10px;
+	}
 }

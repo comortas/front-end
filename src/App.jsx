@@ -27,9 +27,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import './assets/css/kt.scss';
 
 const App = () => {
-	const { isSignedIn } = useSelector(({ sessionReducer }) => {
+	const { isSignedIn, userId } = useSelector(({ sessionReducer, userDetailsReducer }) => {
 		return {
-			isSignedIn: _get(sessionReducer, 'session.id_token', false)
+			isSignedIn: _get(sessionReducer, 'session.id_token', false),
+			userId: _get(userDetailsReducer, 'response.user._id', false)
 		};
 	});
 	const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const App = () => {
 		[ isSignedIn ]
 	);
 	const renderSection = () => {
-		if (isSignedIn) {
+		if (isSignedIn && userId) {
 			return (
 				<React.Fragment>
 					<Header />

@@ -42,8 +42,8 @@ const Header = () => {
 	};
 	if (_isEmpty(userInfo)) return null;
 	return (
-		<div className="kt-header animated fadeIn">
-			<Navbar expand="md" fixed="top" color="light" className="shadow-sm">
+		<div className="kt-header">
+			<Navbar expand="md" fixed="top" color="light" className="shadow-sm animated fadeIn">
 				<NavLink className={'navbar-brand'} to="/">
 					<img src={logo} width="120" />
 				</NavLink>
