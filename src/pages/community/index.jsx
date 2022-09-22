@@ -4,8 +4,9 @@ import { NavLink as RLink } from 'react-router-dom';
 import _get from 'lodash/get';
 import { Button, Card, CardBody, Col, Container, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
 import { getCommunities } from '../../services/community/action';
-import CommunityCard from './components';
+import CommunityCard from './components/community-card';
 import './style.scss';
+import API_CALL from '../../services';
 
 const Community = () => {
 	const { communities, userInfo } = useSelector(({ communityReducer, userDetailsReducer }) => ({
@@ -14,14 +15,16 @@ const Community = () => {
 		userInfo: _get(userDetailsReducer, 'response.user', false)
 	}));
 	const [ activeTab, setActive ] = useState(1);
+	const [ mineCommunity, setMineCommunity ] = useState([]);
 	const dispatch = useDispatch();
-	useEffect(
-		() => {
-			console.log(userInfo);
-			activeTab == 1 ? dispatch(getCommunities()) : dispatch(getCommunities(userInfo._id));
-		},
-		[ activeTab ]
-	);
+	useEffect(() => {
+		dispatch(getCommunities());
+		API_CALL('get', `community/list?userid=${userInfo._id}`, null, null, ({ data, status }) => {
+			if (status === 200) {
+				setMineCommunity(data);
+			}
+		});
+	}, []);
 	return (
 		<Container className="community">
 			<Row>
@@ -51,14 +54,14 @@ const Community = () => {
 							<Card className="create-card">
 								<CardBody>
 									<div className="text-center">
-										{communities.length > 0 ? (
+										{mineCommunity.length > 0 ? (
 											'New community can be created'
 										) : (
 											'Right now you are not part of any community'
 										)}
 										<br />
 										<br />
-										<RLink to="/community/create">
+										<RLink to={`/community/create`}>
 											<Button color="primary" outline>
 												+ Create
 											</Button>
@@ -67,6 +70,7 @@ const Community = () => {
 								</CardBody>
 							</Card>
 						</Col>
+						{mineCommunity.map((data, index) => <CommunityCard key={index} {...data} />)}
 					</Row>
 				</TabPane>
 			</TabContent>

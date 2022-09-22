@@ -12,7 +12,10 @@
 		"type": "git",
 		"url": "git+https://github.com/karmatheory/front-end.git"
 	},
-	"keywords": [ "karmatheory", "timebanking" ],
+	"keywords": [
+		"karmatheory",
+		"timebanking"
+	],
 	"author": "kishorelal sivachandran",
 	"license": "ISC",
 	"bugs": {
@@ -22,6 +25,7 @@
 	"dependencies": {
 		"axios": "^0.27.2",
 		"bootstrap": "^5.2.1",
+		"date-fns": "^2.29.3",
 		"formik": "^2.2.9",
 		"gapi-script": "^1.2.0",
 		"lodash": "^4.17.21",

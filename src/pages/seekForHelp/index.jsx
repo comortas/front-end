@@ -1,30 +1,87 @@
 import { useFormik } from 'formik';
-import React from 'react';
-import { Container, Row, Col, Card, CardBody, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import React, { useState } from 'react';
+import {
+	Container,
+	Row,
+	Col,
+	Card,
+	CardBody,
+	Form,
+	FormGroup,
+	Label,
+	Input,
+	Button,
+	Modal,
+	ModalHeader,
+	ModalBody
+} from 'reactstrap';
 import Calendar from 'react-widgets/Calendar';
 import TimeKeeper from 'react-timekeeper';
 import './style.scss';
 import formImg from './../../assets/images/form.svg';
-import { NavLink } from 'react-router-dom';
+import { format, set } from 'date-fns';
+import { useSelector } from 'react-redux';
+import _get from 'lodash/get';
+import { NavLink, useNavigate } from 'react-router-dom';
+import API_CALL from '../../services';
+import Maps from '../../components/maps';
+import { toast } from 'react-toastify';
 
 const SeekForHelp = () => {
+	const { userInfo } = useSelector(({ userDetailsReducer }) => {
+		return {
+			userInfo: _get(userDetailsReducer, 'response.user', false)
+		};
+	});
+	const navigate = useNavigate();
+	const [ locationModal, setLocationModal ] = useState(false);
 	const { handleChange, handleSubmit, setFieldValue, values } = useFormik({
 		initialValues: {
 			type: 'help',
 			location: '',
-			name: '',
-			description: '',
+			latitude: '',
+			longitude: '',
+			name: 'Hospital care',
+			description: 'I need a help for 2 days to takecare me in the hospital',
 			date: new Date(),
-			time: '12:00',
-			duration: '',
-			poc: '',
-			noOfVolunteers: '',
-			preferredGender: ''
+			time: '14:00',
+			duration: '5',
+			poc: '9629121071',
+			noOfVolunteers: '1',
+			createdBy: userInfo._id,
+			admin: userInfo._id
 		},
 		onSubmit: (values) => {
-			console.log(values);
+			let payload = Object.assign({}, values);
+			payload.date = set(payload.date, {
+				hours: payload.time.split(':')[0],
+				minutes: payload.time.split(':')[1]
+			});
+			API_CALL('post', 'activity', payload, null, ({ data, status }) => {
+				if (status === 200) {
+					toast.success(data.message);
+					navigate('/');
+				} else {
+					toast.error(data.message);
+				}
+			});
 		}
 	});
+
+	const toggle = () => {
+		setLocationModal(!locationModal);
+	};
+	const parsedLocation = (data) => {
+		toggle();
+		console.log('parsedLocation data: ', data);
+		if (data) {
+			const { latitude, longitude, location } = data;
+			setFieldValue('location', location);
+			setFieldValue('latitude', latitude);
+			setFieldValue('longitude', longitude);
+		}
+	};
+
 	return (
 		<Container className="seek-for-help">
 			<Row>
@@ -88,6 +145,15 @@ const SeekForHelp = () => {
 										<FormGroup>
 											<Label>Location</Label>
 											<Input name="location" onChange={handleChange} value={values.location} />
+											<Button onClick={toggle} className="mt-2">
+												Add Location
+											</Button>
+											<Modal isOpen={locationModal} toggle={toggle} fullscreen>
+												<ModalHeader toggle={toggle}>Add Location</ModalHeader>
+												<ModalBody>
+													<Maps callBack={(data) => parsedLocation(data)} />
+												</ModalBody>
+											</Modal>
 										</FormGroup>
 										<FormGroup>
 											<Label>Point of Contact</Label>

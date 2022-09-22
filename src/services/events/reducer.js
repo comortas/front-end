@@ -1,6 +1,6 @@
 import { EVENTS_TYPES } from './action-types';
 
-export const communityReducer = (state = { requesting: false, response: [] }, { type, payload }) => {
+export const eventReducer = (state = { requesting: false, response: [] }, { type, payload }) => {
 	switch (type) {
 		case EVENTS_TYPES.REQ:
 			return {
