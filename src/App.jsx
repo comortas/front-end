@@ -21,6 +21,8 @@ import 'react-widgets/scss/styles.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/css/kt.scss';
 import Homepage from './pages/homepage';
+import Community from './pages/community';
+import CreateCommunity from './pages/community/create';
 
 const App = () => {
 	const { isSignedIn } = useSelector(({ sessionReducer }) => {
@@ -53,6 +55,8 @@ const App = () => {
 							<Route exact path="/" element={<Homepage />} />
 							<Route path="/createHelp" element={<SeekForHelp />} />
 							<Route path="/createEvent" element={<CreateEvent />} />
+							<Route path="/community" element={<Community />} />
+							<Route path="/community/create" element={<CreateCommunity />} />
 							<Route path="*" element={<Navigate to={'/'} replace />} />
 						</Routes>
 					</div>

@@ -4,10 +4,10 @@ import { Container, Row, Col, Card, CardBody, Form, FormGroup, Label, Input, But
 import Calendar from 'react-widgets/Calendar';
 import TimeKeeper from 'react-timekeeper';
 import './style.scss';
-import formImg from './../../assets/images/form.svg';
+import formImg from './../../../assets/images/add.svg';
 import { NavLink } from 'react-router-dom';
 
-const SeekForHelp = () => {
+const CreateCommunity = () => {
 	const { handleChange, handleSubmit, setFieldValue, values } = useFormik({
 		initialValues: {
 			type: 'help',
@@ -26,16 +26,15 @@ const SeekForHelp = () => {
 		}
 	});
 	return (
-		<Container className="seek-for-help">
+		<Container className="create-community">
 			<Row>
 				<Col className="my-5">
 					<Row>
 						<Col xs={12} md={12} lg={6} className="sticky">
 							<div className="mb-4">
 								<h1 className="kt-title">
-									Seek<br />
-									<small className="text-muted">For</small>
-									<br />Help
+									Create<br />
+									<small className="text-muted">Community</small>
 								</h1>
 							</div>
 							<img src={formImg} width="100%" />
@@ -128,7 +127,7 @@ const SeekForHelp = () => {
 											Female
 										</FormGroup>
 										<FormGroup className="d-flex justify-content-end">
-											<NavLink to="/">
+											<NavLink to="/community">
 												<Button type="button" outline className="me-2">
 													Cancel
 												</Button>
@@ -148,4 +147,4 @@ const SeekForHelp = () => {
 	);
 };
 
-export default SeekForHelp;
+export default CreateCommunity;
