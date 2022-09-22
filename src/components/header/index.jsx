@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
 	Collapse,
 	Navbar,
@@ -23,6 +23,7 @@ import { removeSession } from '../../services/session/action';
 import _isEmpty from 'lodash/isEmpty';
 
 const Header = () => {
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { userInfo } = useSelector(({ userDetailsReducer }) => {
 		return {
@@ -77,6 +78,14 @@ const Header = () => {
 										</div>
 									</DropdownToggle>
 									<DropdownMenu>
+										<DropdownItem
+											tag="a"
+											onClick={() => {
+												navigate('profile');
+											}}
+										>
+											Profile
+										</DropdownItem>
 										<DropdownItem tag="a">
 											<GoogleLogout
 												clientId={clientId}

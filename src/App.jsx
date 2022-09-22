@@ -25,6 +25,7 @@ import CreateCommunity from './pages/community/create';
 import 'react-widgets/scss/styles.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/css/kt.scss';
+import Profile from './pages/profile';
 
 const App = () => {
 	const { isSignedIn, userId } = useSelector(({ sessionReducer, userDetailsReducer }) => {
@@ -60,9 +61,10 @@ const App = () => {
 			return (
 				<React.Fragment>
 					<Header />
-					<div className="mt-5">
+					<div className="kt-main-content">
 						<Routes>
 							<Route exact path="/" element={<Homepage />} />
+							<Route path="/profile" element={<Profile />} />
 							<Route path="/createHelp" element={<SeekForHelp />} />
 							<Route path="/createEvent" element={<CreateEvent />} />
 							<Route path="/community" element={<Community />} />
