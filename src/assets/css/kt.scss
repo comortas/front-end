@@ -1,3 +1,20 @@
+:root {
+	--top-selected-color: #ed7b7b;
+	--hand-circle-outer: #ed7b7b;
+	--hand-line-color: #ed7b7b;
+	--hand-circle-center: #ed7b7b;
+
+	--numbers-text-color: #333;
+
+	--clock-bg: #f4f4f4;
+	--clock-wrapper-bg: transparent;
+
+	--meridiem-bg-color: #f4f4f4;
+	--meridiem-selected-bg-color: #ed7b7b;
+	--meridiem-selected-text-color: #333;
+	--meridiem-text-color: #333;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 $font-family-sans-serif: 'Rubik', sans-serif;
@@ -16,5 +33,29 @@ $primary: #ed7b7b;
 	.kt-body {
 		margin-right: 10px;
 		margin-left: 10px;
+	}
+}
+
+.rw-calendar {
+	width: 100%;
+	border: none !important;
+	.rw-cell {
+		border-radius: 50%;
+		&.rw-state-selected {
+			background-color: $primary;
+			border-color: $primary;
+			color: $black;
+		}
+	}
+}
+
+.react-timekeeper {
+	width: 100% !important;
+	box-shadow: none !important;
+	.react-timekeeper__top-bar {
+		padding: 10px 16px 0px;
+	}
+	.react-timekeeper__clock-wrapper {
+		padding: 0 !important;
 	}
 }

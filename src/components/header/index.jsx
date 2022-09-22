@@ -72,6 +72,7 @@ const Header = () => {
 												src={userInfo.imageUrl}
 												className="rounded-circle shadow-sm kt-user-logo"
 												alt="Avatar"
+												referrerPolicy="no-referrer"
 											/>
 										</div>
 									</DropdownToggle>
