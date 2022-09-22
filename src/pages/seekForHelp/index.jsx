@@ -30,11 +30,17 @@ const SeekForHelp = () => {
 			<Row>
 				<Col className="my-5">
 					<Row>
-						<Col xs={6} className="sticky">
-							<h4 className="text-center mb-4">Seek for help</h4>
+						<Col xs={12} md={12} lg={6} className="sticky">
+							<div className="mb-4">
+								<h1 className="title">
+									Seek<br />
+									<small className="text-muted">For</small>
+									<br />Help
+								</h1>
+							</div>
 							<img src={formImg} width="100%" />
 						</Col>
-						<Col xs={6}>
+						<Col xs={12} md={12} lg={6}>
 							<Card>
 								<CardBody>
 									<Form onSubmit={handleSubmit}>
@@ -54,7 +60,7 @@ const SeekForHelp = () => {
 										<FormGroup>
 											<Label>Date</Label>
 											<Row>
-												<Col>
+												<Col xs={12} md={6}>
 													<Calendar
 														value={values.date}
 														onChange={(value) => setFieldValue('date', value)}
@@ -62,7 +68,7 @@ const SeekForHelp = () => {
 														min={new Date()}
 													/>
 												</Col>
-												<Col>
+												<Col xs={12} md={6}>
 													<TimeKeeper
 														time={values.time}
 														onChange={(value) => setFieldValue('time', value.formatted24)}
