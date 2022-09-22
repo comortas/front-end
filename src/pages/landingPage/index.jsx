@@ -23,7 +23,7 @@ const LandingPage = () => {
 					<h5>
 						<small className="text-muted fw-normal">
 							This is not about any kind of theory.<br />
-							It is a platform to connect the people whos' hands are always up for the community or social
+							It is a platform to connect the people whose hands are always up for the community or social
 							service.<br />
 							This theory may be common for you but we stand out with the concept of{' '}
 							<strong>Time Bank</strong>.

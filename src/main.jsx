@@ -12,7 +12,17 @@ const container = document.getElementById('app');
 const Root = createRoot(container);
 Root.render(
 	<Provider store={store}>
-		<ToastContainer />
+		<ToastContainer
+			position="top-right"
+			autoClose={5000}
+			hideProgressBar
+			newestOnTop={false}
+			closeOnClick
+			rtl={false}
+			pauseOnFocusLoss
+			draggable
+			pauseOnHover
+		/>
 		<PersistGate loading={null} persistor={persistor}>
 			<BrowserRouter>
 				<App />
