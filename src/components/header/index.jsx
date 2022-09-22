@@ -56,8 +56,8 @@ const Header = () => {
 							</NavLink>
 						</NavItem>
 						<NavItem>
-							<NavLink className="nav-link" to="/createEvent">
-								Create Event
+							<NavLink className="nav-link" to="/community">
+								Community
 							</NavLink>
 						</NavItem>
 						<NavItem>

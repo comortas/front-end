@@ -1,0 +1,15 @@
+@import './../../assets/css/mixins';
+.community {
+	&::before {
+		@include background-graded-image;
+		background-position-y: top;
+		top: -20px;
+		background-image: url('../../assets/images/communities.svg');
+	}
+	.create-card {
+		.card-body {
+			display: flex;
+			justify-content: center;
+		}
+	}
+}

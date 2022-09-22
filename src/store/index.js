@@ -2,16 +2,18 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-
 import { sessionReducer } from '../services/session/reducer';
 import { userDetailsReducer } from '../services/user-details/reducer';
+import { communityReducer } from '../services/community/reducer';
 /**
  * combineReducers is simply a utility function to simplify the most common use case when writing Redux reducers.
  * It takes an object full of slice reducer functions, and returns a new reducer function
  */
+
 const appReducer = combineReducers({
 	sessionReducer,
-	userDetailsReducer
+	userDetailsReducer,
+	communityReducer
 });
 
 /**
