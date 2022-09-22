@@ -1,21 +1,22 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Button, Container, Input, Row } from 'reactstrap';
+import { Button, Container, Input, Row, Col } from 'reactstrap';
 import { toast } from 'react-toastify';
 import './style.scss';
 import axios from 'axios';
 import { mapsApiKey } from '../../utils/constants';
 import _get from 'lodash/get';
+import mapIcon from './../../assets/images/map.svg';
 
 const Maps = (props) => {
 	const [ location, setLocation ] = useState(null);
 	const [ parsedLocation, setParsedLocation ] = useState(
-		import.meta.env.VITE_IS_LOCAL == '1'
+		import.meta.env.VITE_IS_LOCAL != '1'
 			? {
 					location: 'OMR, Thiruporur, Tamil Nadu, India',
 					latitude: 12.7297355,
 					longitude: 80.1889406
 				}
-			: null
+			: {}
 	);
 	console.log('parsedLocation: ', parsedLocation);
 	const mapRef = useRef(null);
@@ -47,7 +48,7 @@ const Maps = (props) => {
 	useEffect(
 		() => {
 			if (location) {
-				// initMap();
+				initMap();
 				//use it wisely
 			}
 		},
@@ -115,18 +116,26 @@ const Maps = (props) => {
 	return (
 		<div className="kt-map-conatiner">
 			<Input innerRef={locationInputRef} className="mb-2" />
-			<div ref={mapRef} className="kt-map" />
-			<div className="kt-action">
-				<Button
-					color="primary"
-					disabled={!parsedLocation}
-					onClick={() => {
-						props.callBack(parsedLocation);
-					}}
-				>
-					Confirm Location
-				</Button>
-			</div>
+			<Row>
+				<Col>
+					<div ref={mapRef} className="kt-map" />
+				</Col>
+				<Col className="align-item-center">
+					<img src={mapIcon} width="200" />
+					<h2>{parsedLocation.location ? parsedLocation.location : 'Find or Select a location in map'}</h2>
+					<div className="kt-action">
+						<Button
+							color="primary"
+							disabled={!parsedLocation}
+							onClick={() => {
+								props.callBack(parsedLocation);
+							}}
+						>
+							Confirm Location
+						</Button>
+					</div>
+				</Col>
+			</Row>
 		</div>
 	);
 };

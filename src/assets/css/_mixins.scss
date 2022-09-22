@@ -23,6 +23,8 @@ $spacer: 1.5rem !default;
 $dropdown-padding-y: 1rem !default;
 $primary: #ed7b7b;
 
+@import 'bootstrap/scss/bootstrap';
+
 @mixin background-graded-image {
 	content: "";
 	position: fixed;
@@ -35,5 +37,3 @@ $primary: #ed7b7b;
 	background-repeat: no-repeat;
 	background-size: 100%;
 }
-
-@import 'bootstrap/scss/bootstrap';

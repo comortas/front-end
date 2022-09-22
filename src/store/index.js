@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import { sessionReducer } from '../services/session/reducer';
 import { userDetailsReducer } from '../services/user-details/reducer';
 import { communityReducer } from '../services/community/reducer';
+import { eventReducer } from '../services/events/reducer';
 /**
  * combineReducers is simply a utility function to simplify the most common use case when writing Redux reducers.
  * It takes an object full of slice reducer functions, and returns a new reducer function
@@ -13,7 +14,8 @@ import { communityReducer } from '../services/community/reducer';
 const appReducer = combineReducers({
 	sessionReducer,
 	userDetailsReducer,
-	communityReducer
+	communityReducer,
+	eventReducer
 });
 
 /**
