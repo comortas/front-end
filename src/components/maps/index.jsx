@@ -1,12 +1,23 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Container, Input } from 'reactstrap';
+import { Button, Container, Input, Row } from 'reactstrap';
 import { toast } from 'react-toastify';
 import './style.scss';
 import axios from 'axios';
 import { mapsApiKey } from '../../utils/constants';
+import _get from 'lodash/get';
 
-const Maps = () => {
+const Maps = (props) => {
 	const [ location, setLocation ] = useState(null);
+	const [ parsedLocation, setParsedLocation ] = useState(
+		import.meta.env.VITE_IS_LOCAL == '1'
+			? {
+					location: 'OMR, Thiruporur, Tamil Nadu, India',
+					latitude: 12.7297355,
+					longitude: 80.1889406
+				}
+			: null
+	);
+	console.log('parsedLocation: ', parsedLocation);
 	const mapRef = useRef(null);
 	const locationInputRef = useRef(null);
 
@@ -36,44 +47,88 @@ const Maps = () => {
 	useEffect(
 		() => {
 			if (location) {
-				// axios({
-				// 	method: 'get',
-				// 	url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${mapsApiKey}`
-				// }).then((data) => {
-				// 	console.log('data: ', data);
-				// });
-				// let map = new google.maps.Map(mapRef.current, { center: location, zoom: 15 });
-				// let autocomplete = new google.maps.places.Autocomplete(locationInputRef.current);
-				// map.addListener('click', (mapsMouseEvent) => {
-				// 	console.log('mapsMouseEvent: ', mapsMouseEvent.latLng);
-				// });
-				// new google.maps.Marker({
-				// 	position: location,
-				// 	title: 'current location',
-				// 	map
-				// });
-				// autocomplete.addListener('place_changed', () => {
-				// 	const place = autocomplete.getPlace();
-				// 	map = new google.maps.Map(mapRef.current, {
-				// 		center: { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() },
-				// 		zoom: 15
-				// 	});
-				// 	new google.maps.Marker({
-				// 		position: place.geometry.location,
-				// 		title: place.name,
-				// 		map
-				// 	});
-				// });
+				// initMap();
+				//use it wisely
 			}
 		},
 		[ location ]
 	);
+	let map;
+	let autocomplete;
+	let markers = [];
+	const initMap = () => {
+		map = new google.maps.Map(mapRef.current, { center: location, zoom: 15 });
+		autocomplete = new google.maps.places.Autocomplete(locationInputRef.current);
+		map.addListener('click', (mapsMouseEvent) => {
+			console.log('mapsMouseEvent: ', mapsMouseEvent.latLng);
+			axios({
+				method: 'get',
+				url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${mapsMouseEvent.latLng.lat()},${mapsMouseEvent.latLng.lng()}&key=${mapsApiKey}`,
+				responseType: 'json'
+			}).then(({ data, status }) => {
+				console.log('data: ', data);
+				if (status === 200) {
+					let place = data.results[0].formatted_address;
+					setMapOnAll(null);
+					markers = [];
+					let latlng = {
+						lat: mapsMouseEvent.latLng.lat(),
+						lng: mapsMouseEvent.latLng.lng()
+					};
+					addMarker(latlng, place);
+				}
+			});
+		});
+		// addMarker(location, 'current location');
+		autocomplete.addListener('place_changed', () => {
+			const place = autocomplete.getPlace();
+			let latlng = {
+				lat: place.geometry.location.lat(),
+				lng: place.geometry.location.lng()
+			};
+			console.log('map: ', map);
+			map.setCenter(latlng);
+			setMapOnAll(null);
+			markers = [];
+			addMarker(latlng, place.formatted_address);
+		});
+	};
+	const addMarker = (latlng, place) => {
+		setParsedLocation({
+			location: place,
+			latitude: latlng.lat,
+			longitude: latlng.lng
+		});
+		const marker = new google.maps.Marker({
+			position: latlng,
+			title: place,
+			map
+		});
+
+		markers.push(marker);
+	};
+	const setMapOnAll = (map) => {
+		for (let i = 0; i < markers.length; i++) {
+			markers[i].setMap(map);
+		}
+	};
 	return (
-		<Container fluid>
-			<Input innerRef={locationInputRef} />
+		<div className="kt-map-conatiner">
+			<Input innerRef={locationInputRef} className="mb-2" />
 			<div ref={mapRef} className="kt-map" />
-		</Container>
+			<div className="kt-action">
+				<Button
+					color="primary"
+					disabled={!parsedLocation}
+					onClick={() => {
+						props.callBack(parsedLocation);
+					}}
+				>
+					Confirm Location
+				</Button>
+			</div>
+		</div>
 	);
 };
 
-export default React.memo(Maps);
+export default Maps;

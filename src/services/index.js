@@ -18,6 +18,9 @@ function API_CALL(method, url, data, type, callback, headerConfig, errCallback, 
 
 	axios.interceptors.request.use(
 		(config) => {
+			if (config.url.includes('maps')) {
+				return config;
+			}
 			let header = {
 				'Cache-Control': 'no-cache'
 			};
