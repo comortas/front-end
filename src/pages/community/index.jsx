@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink as RLink } from 'react-router-dom';
+import _get from 'lodash/get';
 import { Button, Card, CardBody, Col, Container, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
 import { getCommunities } from '../../services/community/action';
 import CommunityCard from './components';
 import './style.scss';
 
 const Community = () => {
-	const { communities } = useSelector(({ communityReducer }) => ({
+	const { communities, userInfo } = useSelector(({ communityReducer, userDetailsReducer }) => ({
 		communities: communityReducer.response,
-		loader: communityReducer.requesting
+		loader: communityReducer.requesting,
+		userInfo: _get(userDetailsReducer, 'response.user', false)
 	}));
 	const [ activeTab, setActive ] = useState(1);
 	const dispatch = useDispatch();
 	useEffect(
 		() => {
-			activeTab == 1 ? dispatch(getCommunities()) : null;
+			console.log(userInfo);
+			activeTab == 1 ? dispatch(getCommunities()) : dispatch(getCommunities(userInfo._id));
 		},
 		[ activeTab ]
 	);
@@ -48,7 +51,12 @@ const Community = () => {
 							<Card className="create-card">
 								<CardBody>
 									<div className="text-center">
-										Right now you are not part of any community<br />
+										{communities.length > 0 ? (
+											'New community can be created'
+										) : (
+											'Right now you are not part of any community'
+										)}
+										<br />
 										<br />
 										<RLink to="/community/create">
 											<Button color="primary" outline>

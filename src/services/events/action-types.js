@@ -1,0 +1,5 @@
+export const EVENTS_TYPES = {
+	REQ: 'EVENTS_REQ',
+	RES: 'EVENTS_RES',
+	FAIL: 'EVENTS_FAIL'
+};
