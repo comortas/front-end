@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink as RLink } from 'react-router-dom';
 import _get from 'lodash/get';
+import _isEmpty from 'lodash/isEmpty';
 import { Button, Card, CardBody, Col, Container, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
 import { getCommunities } from '../../services/community/action';
 import CommunityCard from './components/community-card';
 import './style.scss';
 import API_CALL from '../../services';
-
+import Empty from '../../components/no-data';
 const Community = () => {
 	const { communities, userInfo } = useSelector(({ communityReducer, userDetailsReducer }) => ({
 		communities: communityReducer.response,
@@ -46,7 +47,13 @@ const Community = () => {
 			</Nav>
 			<TabContent activeTab={activeTab} className="py-3">
 				<TabPane tabId={1}>
-					<Row>{communities.map((data, index) => <CommunityCard key={index} {...data} />)}</Row>
+					<Row>
+						{_isEmpty(communities) ? (
+							<Empty />
+						) : (
+							communities.map((data, index) => <CommunityCard key={index} {...data} />)
+						)}
+					</Row>
 				</TabPane>
 				<TabPane tabId={2}>
 					<Row>

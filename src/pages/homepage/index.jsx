@@ -4,13 +4,20 @@ import { Col, Container, Row } from 'reactstrap';
 import { getActivities } from '../../services/events/action';
 import EventCard from './components/event-card';
 import './style.scss';
+import _isEmpty from 'lodash/isEmpty';
+import Empty from '../../components/no-data';
 
 const Homepage = () => {
 	const dispatch = useDispatch();
-	const { events } = useSelector(({ eventReducer }) => ({ events: eventReducer.response }));
+	const { events, eventsLoader } = useSelector(({ eventReducer }) => ({
+		events: eventReducer.response,
+		eventsLoader: eventReducer.requesting
+	}));
 	useEffect(() => {
 		dispatch(getActivities());
 	}, []);
+	console.log('events: ', events);
+	if (eventsLoader) return 'loading...';
 	return (
 		<Container className="homepage" fluid="xl">
 			<Row>
@@ -19,9 +26,13 @@ const Homepage = () => {
 				</Col>
 			</Row>
 			<Row>
-				{events
-					.filter(({ status }) => status === 'open')
-					.map((data, index) => <EventCard key={index} data={data} />)}
+				{_isEmpty(events) ? (
+					<Empty />
+				) : (
+					events
+						.filter(({ status }) => status === 'open')
+						.map((data, index) => <EventCard key={index} data={data} />)
+				)}
 			</Row>
 		</Container>
 	);

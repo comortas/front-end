@@ -2,14 +2,28 @@ import React from 'react';
 import { Card, CardBody, Col, Row, Button } from 'reactstrap';
 import { format } from 'date-fns';
 import poster from './../../../assets/images/event-poster.jpg';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import _get from 'lodash/get';
 import API_CALL from '../../../services';
 import { toast } from 'react-toastify';
+import { getActivities } from '../../../services/events/action';
 
 const EventCard = ({ data }) => {
 	console.log('data: ', data);
-	const { name, description, _id, location, date, noOfVolunteers, duration, createdBy, status, communityId } = data;
+	const dispatch = useDispatch();
+	const {
+		name,
+		description,
+		_id,
+		location,
+		date,
+		noOfVolunteers,
+		duration,
+		createdBy,
+		status,
+		communityId,
+		volunteers
+	} = data;
 	const { userInfo } = useSelector(({ userDetailsReducer }) => {
 		return {
 			userInfo: _get(userDetailsReducer, 'response.user', false)
@@ -19,16 +33,19 @@ const EventCard = ({ data }) => {
 		API_CALL('post', 'activity/apply', { activityId: _id, volunteerId: userInfo._id }, null, ({ data, status }) => {
 			if (status === 200) {
 				toast.success(data.message);
+				dispatch(getActivities());
 			} else {
 				toast.error(data.message);
 			}
 		});
 	};
 	const renderTextByStatus = () => {
-		if (status == 'open') {
-			return 'I am Interested';
-		}
-		return 'inime';
+		let self = volunteers.find(({ volunteerId }) => volunteerId == userInfo._id);
+		if (!self) return 'I am Interested';
+		console.log('self: ', self);
+		if (self.requestStatus.toLowerCase() == 'open') return 'I am Interested';
+
+		if (self.requestStatus.toLowerCase() == 'pending') return 'pending';
 	};
 	return (
 		<Col key={_id} xs={12} md={6} lg={4} className="mb-3">

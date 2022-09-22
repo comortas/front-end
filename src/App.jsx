@@ -26,6 +26,7 @@ import 'react-widgets/scss/styles.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/css/kt.scss';
 import Profile from './pages/profile';
+import ViewCommunity from './pages/community/view';
 
 const App = () => {
 	const { isSignedIn, userId } = useSelector(({ sessionReducer, userDetailsReducer }) => {
@@ -69,6 +70,7 @@ const App = () => {
 							<Route path="/createEvent" element={<CreateEvent />} />
 							<Route path="/community" element={<Community />} />
 							<Route path="/community/create" element={<CreateCommunity />} />
+							<Route path="/community/view/:id" element={<ViewCommunity />} />
 							<Route path="*" element={<Navigate to={'/'} replace />} />
 						</Routes>
 					</div>

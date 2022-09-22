@@ -17,13 +17,14 @@ import {
 } from 'reactstrap';
 import './style.scss';
 import formImg from './../../../assets/images/add.svg';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Maps from '../../../components/maps';
 import API_CALL from '../../../services';
 import { useSelector } from 'react-redux';
 import _get from 'lodash/get';
 
 const CreateCommunity = () => {
+	const navigate = useNavigate();
 	const { userInfo } = useSelector(({ userDetailsReducer }) => {
 		return {
 			userInfo: _get(userDetailsReducer, 'response.user', false)
@@ -47,6 +48,7 @@ const CreateCommunity = () => {
 				console.log('data: ', data);
 				if (status === 200) {
 					console.log('status: ', status);
+					navigate('community');
 				}
 			});
 		}
