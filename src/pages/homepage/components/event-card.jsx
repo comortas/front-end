@@ -5,7 +5,7 @@ import poster from './../../../assets/images/event-poster.jpg';
 import { useSelector } from 'react-redux';
 import _get from 'lodash/get';
 
-const EventCard = ({ name, description, _id, location, date, noOfVolunteers, duration, createdBy }) => {
+const EventCard = ({ name, description, _id, location, date, noOfVolunteers, duration, createdBy, communityId }) => {
 	const { userInfo } = useSelector(({ userDetailsReducer }) => {
 		return {
 			userInfo: _get(userDetailsReducer, 'response.user', false)
@@ -13,10 +13,13 @@ const EventCard = ({ name, description, _id, location, date, noOfVolunteers, dur
 	});
 	return (
 		<Col key={_id} xs={12} md={6} lg={4} className="mb-3">
-			<Card>
+			<Card className="event-card">
 				<img src={poster} style={{ borderRadius: '20px 20px 0px 0px' }} />
 				<CardBody>
 					<h4>{name}</h4>
+					<Button outline size="sm">
+						{communityId ? 'Community' : 'Individual'}
+					</Button>
 					<p>
 						{description}
 						<br />

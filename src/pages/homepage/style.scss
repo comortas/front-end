@@ -4,4 +4,11 @@
 		@include background-graded-image;
 		background-image: url('../../assets/images/seek-for-help.svg');
 	}
+	.event-card {
+		.btn-sm {
+			border-radius: 20px;
+			font-size: 72%;
+			margin-bottom: 0.75rem;
+		}
+	}
 }

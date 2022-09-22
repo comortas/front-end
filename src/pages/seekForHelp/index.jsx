@@ -41,13 +41,13 @@ const SeekForHelp = () => {
 			location: '',
 			latitude: '',
 			longitude: '',
-			name: 'Hospital care',
-			description: 'I need a help for 2 days to takecare me in the hospital',
+			name: '',
+			description: '',
 			date: new Date(),
-			time: '14:00',
-			duration: '5',
-			poc: '9629121071',
-			noOfVolunteers: '1',
+			time: '12:00',
+			duration: '',
+			poc: '',
+			noOfVolunteers: '',
 			createdBy: userInfo._id,
 			admin: userInfo._id
 		},
@@ -144,7 +144,12 @@ const SeekForHelp = () => {
 										</FormGroup>
 										<FormGroup>
 											<Label>Location</Label>
-											<Input name="location" onChange={handleChange} value={values.location} />
+											<Input
+												name="location"
+												disabled
+												onChange={handleChange}
+												value={values.location}
+											/>
 											<Button onClick={toggle} className="mt-2">
 												Add Location
 											</Button>
