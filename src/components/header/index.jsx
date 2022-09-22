@@ -24,9 +24,9 @@ import _isEmpty from 'lodash/isEmpty';
 
 const Header = () => {
 	const dispatch = useDispatch();
-	const { userInfo } = useSelector(({ sessionReducer }) => {
+	const { userInfo } = useSelector(({ userDetailsReducer }) => {
 		return {
-			userInfo: _get(sessionReducer, 'userInfo', false)
+			userInfo: _get(userDetailsReducer, 'response.user', false)
 		};
 	});
 
@@ -42,7 +42,7 @@ const Header = () => {
 	};
 	if (_isEmpty(userInfo)) return null;
 	return (
-		<div className="kt-header">
+		<div className="kt-header animated fadeIn">
 			<Navbar expand="md" fixed="top" color="light" className="shadow-sm">
 				<NavLink className={'navbar-brand'} to="/">
 					<img src={logo} width="120" />
@@ -69,7 +69,7 @@ const Header = () => {
 									<DropdownToggle className="nav-link p-0" tag="a">
 										<div className="kt-right">
 											<img
-												src={userInfo.imageUrl}
+												src={userInfo.profilePicture}
 												className="rounded-circle shadow-sm kt-user-logo"
 												alt="Avatar"
 												referrerPolicy="no-referrer"

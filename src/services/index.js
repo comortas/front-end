@@ -4,12 +4,13 @@ import { load } from 'react-cookies';
 // import { Toast } from './common-action';
 import store from '../store';
 import _get from 'lodash/get';
+import { removeSession } from './session/action';
 // import { constants } from '../utils/constants';
 
 const ROOT_URL = import.meta.env.VITE_API_URL;
 
 export const getToken = () => {
-	return load('session') && `Bearer ${load('session').tokenObj.id_token}`;
+	return load('session') && `Bearer ${load('session').id_token}`;
 };
 function API_CALL(method, url, data, type, callback, headerConfig, errCallback, file, onUploadProgress, cancelToken) {
 	import.meta.env.VITE_IS_LOCAL == '1' &&
@@ -32,15 +33,23 @@ function API_CALL(method, url, data, type, callback, headerConfig, errCallback, 
 		}
 	);
 
+	axios.interceptors.response.use(
+		(response) => {
+			return response;
+		},
+		(error) => {
+			const { config, response: { status } } = error;
+			if (status === 401) {
+				store.dispatch(removeSession());
+			}
+		}
+	);
+
 	if (callback) {
 		axios({
 			method,
 			url: ROOT_URL + url,
 			data,
-			validateStatus: (status) => {
-				if (load('session') && status == 401) return false;
-				else return true; // I'm always returning true, you may want to do it depending on the status received
-			},
 			responseType: file ? 'arraybuffer' : 'json',
 			onUploadProgress: ({ loaded, total }) => {
 				let percent = Math.floor(loaded * 100 / total);
@@ -59,11 +68,7 @@ function API_CALL(method, url, data, type, callback, headerConfig, errCallback, 
 			axios({
 				method,
 				url: ROOT_URL + url,
-				data,
-				validateStatus: (status) => {
-					if (load('session') && status == 401) return false;
-					else return true; // I'm always returning true, you may want to do it depending on the status received
-				}
+				data
 			}).then((response) => {
 				if (response.status === 500 || response.status === 400) {
 					// Toast.add({ type: 'error', message: response.data.message });

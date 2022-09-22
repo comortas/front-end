@@ -5,13 +5,11 @@ export const sessionReducer = (state = { session: {}, userInfo: {} }, { type, pa
 		case SESSION_DETAILS.SET:
 			return {
 				...state,
-				session: payload.tokenObj,
-				userInfo: payload.profileObj
+				session: payload
 			};
 		case SESSION_DETAILS.REMOVE:
 			return {
-				session: {},
-				userInfo: {}
+				session: {}
 			};
 		default:
 			return state;

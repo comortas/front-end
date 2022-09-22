@@ -21,6 +21,7 @@ import 'react-widgets/scss/styles.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/css/kt.scss';
 import Homepage from './pages/homepage';
+import { getUserDetails } from './services/user-details/action';
 
 const App = () => {
 	const { isSignedIn } = useSelector(({ sessionReducer }) => {
@@ -42,7 +43,14 @@ const App = () => {
 			scope: ''
 		});
 	};
-
+	useEffect(
+		() => {
+			if (isSignedIn) {
+				dispatch(getUserDetails());
+			}
+		},
+		[ isSignedIn ]
+	);
 	const renderSection = () => {
 		if (isSignedIn) {
 			return (

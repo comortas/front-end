@@ -12,7 +12,7 @@ const Login = () => {
 	const dispatch = useDispatch();
 	const onSuccess = (response) => {
 		console.log('onSuccess: ', response);
-		dispatch(setSession({ profileObj: response.profileObj, tokenObj: response.tokenObj }));
+		dispatch(setSession(response.tokenObj));
 	};
 	const onFailure = (response) => {
 		console.log('onFailure: ', response);
