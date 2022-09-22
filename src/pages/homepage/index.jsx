@@ -18,7 +18,11 @@ const Homepage = () => {
 					<h1 className="kt-title">Popular Events</h1>
 				</Col>
 			</Row>
-			<Row>{events.filter(({ status }) => status === 'open').map((data) => <EventCard {...data} />)}</Row>
+			<Row>
+				{events
+					.filter(({ status }) => status === 'open')
+					.map((data, index) => <EventCard key={index} data={data} />)}
+			</Row>
 		</Container>
 	);
 };

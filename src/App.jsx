@@ -57,7 +57,7 @@ const App = () => {
 		[ isSignedIn ]
 	);
 	const renderSection = () => {
-		if (isSignedIn && userId) {
+		if (isSignedIn) {
 			return (
 				<React.Fragment>
 					<Header />
