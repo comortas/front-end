@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Button } from 'reactstrap';
 import _isEmpty from 'lodash/isEmpty';
+import './style.scss';
 
 const MapView = ({ config }) => {
 	const { events, selectedEventCallBack } = config;

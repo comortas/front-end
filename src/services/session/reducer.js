@@ -1,6 +1,6 @@
 import { SESSION_DETAILS } from './action-type';
 
-export const sessionReducer = (state = { session: {}, userInfo: {} }, { type, payload }) => {
+export const sessionReducer = (state = { session: {} }, { type, payload }) => {
 	switch (type) {
 		case SESSION_DETAILS.SET:
 			return {

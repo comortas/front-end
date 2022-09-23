@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Container, Nav, NavItem, NavLink, TabContent, TabPane, CardBody, Button, Card } from 'reactstrap';
 import { getActivities } from '../../services/events/action';
-import EventCard from './components/event-card';
+import EventCard from '../../components/event-card/event-card';
 import './style.scss';
 import _isEmpty from 'lodash/isEmpty';
 import Empty from '../../components/no-data';
-import MapView from './components/map-view';
 import { format } from 'date-fns';
 import poster from '../../assets/images/event-poster.jpg';
+import MapView from '../../components/map-view/map-view';
 
 const Homepage = () => {
 	const dispatch = useDispatch();
@@ -28,56 +28,9 @@ const Homepage = () => {
 	};
 	const renderSelectedEvent = () => {
 		if (selectedEvent) {
-			console.log('selectedEvent: ', selectedEvent);
-			const {
-				communityId = false,
-				description,
-				location,
-				duration,
-				noOfVolunteers,
-				createdBy,
-				date
-			} = selectedEvent;
 			return (
 				<Col xs={12} md={4} lg={4} className="animated fadeIn">
-					<Card className="event-card">
-						<img src={poster} style={{ borderRadius: '20px 20px 0px 0px', width: '100%' }} />
-						<CardBody>
-							<h4>{name}</h4>
-							<Button outline size="sm">
-								{communityId ? 'Community' : 'Individual'}
-							</Button>
-							<p>
-								{description}
-								<br />
-								Location<br />
-								<span className="text-muted">{location}</span>
-							</p>
-							<Row>
-								<Col>
-									Date<br />
-									<span className="text-muted">
-										{format(new Date(date), 'dd/MM/yyyy h:mm a')} {duration}Hr(s)
-									</span>
-								</Col>
-								<Col>
-									Volunteer(s)<br />
-									<span className="text-muted">{noOfVolunteers}</span>
-								</Col>
-							</Row>
-							<Row>
-								{/* <Col className="d-flex justify-content-end">
-									{userInfo._id != createdBy ? (
-										<Button color="primary" onClick={() => registerInterest()}>
-											{renderTextByStatus()}
-										</Button>
-									) : (
-										<Button disabled>Owner</Button>
-									)}
-								</Col> */}
-							</Row>
-						</CardBody>
-					</Card>
+					<EventCard data={selectedEvent} outsideCommunity={true} />
 				</Col>
 			);
 		}
@@ -116,9 +69,11 @@ const Homepage = () => {
 						{_isEmpty(events) ? (
 							<Empty />
 						) : (
-							events
-								.filter(({ status }) => status === 'open')
-								.map((data, index) => <EventCard key={index} data={data} />)
+							events.filter(({ status }) => status === 'open').map((data, index) => (
+								<Col key={index} xs={12} md={6} lg={4} className="mb-3">
+									<EventCard data={data} outsideCommunity={true} />
+								</Col>
+							))
 						)}
 					</Row>
 				</TabPane>

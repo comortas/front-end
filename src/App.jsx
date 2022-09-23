@@ -27,6 +27,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './assets/css/kt.scss';
 import Profile from './pages/profile';
 import ViewCommunity from './pages/community/view';
+import Event from './pages/event';
 
 const App = () => {
 	const { isSignedIn, userId } = useSelector(({ sessionReducer, userDetailsReducer }) => {
@@ -67,7 +68,8 @@ const App = () => {
 							<Route exact path="/" element={<Homepage />} />
 							<Route path="/profile" element={<Profile />} />
 							<Route path="/createHelp" element={<SeekForHelp />} />
-							<Route path="/createEvent" element={<CreateEvent />} />
+							<Route path="/createevent/:id" element={<CreateEvent />} />
+							<Route path="/event/:id" element={<Event />} />
 							<Route path="/community" element={<Community />} />
 							<Route path="/community/create" element={<CreateCommunity />} />
 							<Route path="/community/view/:id" element={<ViewCommunity />} />

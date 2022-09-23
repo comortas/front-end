@@ -4,42 +4,4 @@
 		@include background-graded-image;
 		background-image: url('../../assets/images/seek-for-help.svg');
 	}
-	.event-card {
-		&:hover {
-			box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
-				rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px,
-				rgba(0, 0, 0, 0.07) 0px 32px 64px;
-			transition: 500ms;
-		}
-		.btn-sm {
-			border-radius: 20px;
-			font-size: 72%;
-			margin-bottom: 0.75rem;
-		}
-	}
-	.kt-map-view-container {
-		position: relative;
-		.kt-map {
-			height: 500px;
-			border-radius: 20px;
-			box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
-				rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px,
-				rgba(0, 0, 0, 0.07) 0px 32px 64px;
-		}
-		.kt-action {
-			display: flex;
-			margin-top: 10px;
-		}
-		.gmnoprint a,
-		.gmnoprint span,
-		.gm-style-cc {
-			display: none;
-		}
-		.gmnoprint div {
-			background: none !important;
-		}
-		img[alt="Google"] {
-			display: none;
-		}
-	}
 }
