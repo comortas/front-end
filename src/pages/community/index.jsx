@@ -56,7 +56,7 @@ const Community = () => {
 					</Row>
 				</TabPane>
 				<TabPane tabId={2}>
-					<Row>
+					<Row className="align-items-center">
 						<Col xs={12} md={6} lg={4} className="mb-3">
 							<Card className="create-card">
 								<CardBody>

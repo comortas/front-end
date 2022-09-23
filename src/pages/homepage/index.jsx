@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
 import { getActivities } from '../../services/events/action';
-import EventCard from './components/event-card';
+import EventCard from '../../components/event-card/event-card';
 import './style.scss';
 import _isEmpty from 'lodash/isEmpty';
 import Empty from '../../components/no-data';
@@ -31,7 +31,7 @@ const Homepage = () => {
 				) : (
 					events
 						.filter(({ status }) => status === 'open')
-						.map((data, index) => <EventCard key={index} data={data} />)
+						.map((data, index) => <EventCard key={index} data={data} outsideCommunity={true} />)
 				)}
 			</Row>
 		</Container>
