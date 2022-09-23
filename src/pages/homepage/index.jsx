@@ -9,14 +9,14 @@ import Empty from '../../components/no-data';
 import { format } from 'date-fns';
 import poster from '../../assets/images/event-poster.jpg';
 import MapView from '../../components/map-view/map-view';
-
+import Loader from './loader';
 const Homepage = () => {
 	const dispatch = useDispatch();
 	const { events, eventsLoader } = useSelector(({ eventReducer }) => ({
 		events: eventReducer.response,
 		eventsLoader: eventReducer.requesting
 	}));
-	const [ activeTab, setActive ] = useState(2);
+	const [ activeTab, setActive ] = useState(1);
 	useEffect(() => {
 		dispatch(getActivities());
 	}, []);
@@ -37,13 +37,13 @@ const Homepage = () => {
 	};
 	useEffect(
 		() => {
-			if (activeTab == '1') {
+			if (activeTab == 1) {
 				setSelectedEvent(undefined);
 			}
 		},
 		[ activeTab ]
 	);
-	if (eventsLoader) return 'loading...';
+
 	return (
 		<Container className="homepage" fluid="xl">
 			<Row>
@@ -65,17 +65,21 @@ const Homepage = () => {
 			</Nav>
 			<TabContent activeTab={activeTab} className="py-3">
 				<TabPane tabId={1}>
-					<Row>
-						{_isEmpty(events) ? (
-							<Empty />
-						) : (
-							events.filter(({ status }) => status === 'open').map((data, index) => (
-								<Col key={index} xs={12} md={6} lg={4} className="mb-3">
-									<EventCard data={data} outsideCommunity={true} />
-								</Col>
-							))
-						)}
-					</Row>
+					{eventsLoader ? (
+						<Loader />
+					) : (
+						<Row>
+							{_isEmpty(events) ? (
+								<Empty />
+							) : (
+								events.filter(({ status }) => status === 'open').map((data, index) => (
+									<Col key={index} xs={12} md={6} lg={4} className="mb-3">
+										<EventCard data={data} outsideCommunity={true} />
+									</Col>
+								))
+							)}
+						</Row>
+					)}
 				</TabPane>
 				<TabPane tabId={2}>
 					<Row>
