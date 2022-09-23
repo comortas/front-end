@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import { getActivities } from '../../../services/events/action';
 
 const EventCard = ({ data }) => {
-	console.log('data: ', data);
+	// console.log('data: ', data);
 	const dispatch = useDispatch();
 	const {
 		name,
