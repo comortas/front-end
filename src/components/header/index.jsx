@@ -9,6 +9,7 @@ import { clientId } from '../../utils/constants';
 import './style.scss';
 import { removeSession } from '../../services/session/action';
 import _isEmpty from 'lodash/isEmpty';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Header = () => {
 	const dispatch = useDispatch();
@@ -55,19 +56,22 @@ const Header = () => {
 									<div className="kt-profile-body">
 										<div className="kt-logo-section">
 											<img
-												alt="Sample"
+												alt="User Logo"
 												className="kt-user-logo my-2"
 												src={userInfo.profilePicture}
 											/>
 										</div>
 										<span className="fs-5">{userInfo.name}</span>
 										<span className="fs-6 text-muted">{userInfo.email}</span>
-										<span>Time Wallet : {userInfo.wallet} hr(s)</span>
+										<span>
+											<FontAwesomeIcon icon={[ 'fas', 'wallet' ]} /> Time Wallet :{' '}
+											{userInfo.wallet} hr(s)
+										</span>
 										<GoogleLogout
 											clientId={clientId}
 											render={(renderProps) => (
 												<Button className="mt-3" onClick={renderProps.onClick}>
-													Logout
+													<FontAwesomeIcon icon={[ 'fas', 'sign-out-alt' ]} /> Logout
 												</Button>
 											)}
 											buttonText="Logout"

@@ -1,9 +1,21 @@
+@import './../../assets/css/mixins';
+
 .kt-header {
 	.navbar-nav {
 		max-height: 70px;
 		align-items: center;
 		.kt-user-logo {
 			height: 50px;
+		}
+		.nav-link {
+			border-bottom: 2px solid transparent;
+			margin-right: 10px;
+			border-radius: 20px;
+			padding: 7px 20px !important;
+			transition: 500ms;
+			&.active {
+				background-color: rgba($color: $primary, $alpha: 0.5);
+			}
 		}
 	}
 }

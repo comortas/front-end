@@ -27,6 +27,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import API_CALL from '../../services';
 import Maps from '../../components/maps';
 import { toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SeekForHelp = () => {
 	const { userInfo } = useSelector(({ userDetailsReducer }) => {
@@ -36,7 +37,7 @@ const SeekForHelp = () => {
 	});
 	const navigate = useNavigate();
 	const [ locationModal, setLocationModal ] = useState(false);
-	const { handleChange, handleSubmit, setFieldValue, values, errors } = useFormik({
+	const { handleChange, handleSubmit, setFieldValue, values, errors, setFieldError } = useFormik({
 		initialValues: {
 			type: 'help',
 			location: '',
@@ -75,6 +76,7 @@ const SeekForHelp = () => {
 			if (!values.noOfVolunteers) {
 				errors.noOfVolunteers = true;
 			}
+			console.log('values.location: ', values.location);
 			if (!values.location) {
 				errors.location = true;
 			}
@@ -100,14 +102,15 @@ const SeekForHelp = () => {
 	const toggle = () => {
 		setLocationModal(!locationModal);
 	};
-	const parsedLocation = (data) => {
+	const parsedLocation = async (data) => {
 		toggle();
 		console.log('parsedLocation data: ', data);
 		if (data) {
 			const { latitude, longitude, location } = data;
-			setFieldValue('location', location);
-			setFieldValue('latitude', latitude);
-			setFieldValue('longitude', longitude);
+			await setFieldValue('location', location);
+			await setFieldValue('latitude', latitude);
+			await setFieldValue('longitude', longitude);
+			setFieldError('location', false);
 		}
 	};
 
@@ -191,7 +194,7 @@ const SeekForHelp = () => {
 												invalid={errors.location}
 											/>
 											<Button onClick={toggle} className="mt-2">
-												Add Location
+												<FontAwesomeIcon icon={('fas', 'location-dot')} /> Add Location
 											</Button>
 											{errors.location && <FormFeedback>Required</FormFeedback>}
 											<Modal isOpen={locationModal} toggle={toggle} fullscreen>

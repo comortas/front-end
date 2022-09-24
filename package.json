@@ -12,10 +12,7 @@
 		"type": "git",
 		"url": "git+https://github.com/karmatheory/front-end.git"
 	},
-	"keywords": [
-		"karmatheory",
-		"timebanking"
-	],
+	"keywords": [ "karmatheory", "timebanking" ],
 	"author": "kishorelal sivachandran",
 	"license": "ISC",
 	"bugs": {
@@ -23,6 +20,11 @@
 	},
 	"homepage": "https://github.com/karmatheory/front-end#readme",
 	"dependencies": {
+		"@fortawesome/fontawesome-svg-core": "^6.2.0",
+		"@fortawesome/free-brands-svg-icons": "^6.2.0",
+		"@fortawesome/free-regular-svg-icons": "^6.2.0",
+		"@fortawesome/free-solid-svg-icons": "^6.2.0",
+		"@fortawesome/react-fontawesome": "^0.2.0",
 		"axios": "^0.27.2",
 		"bootstrap": "^5.2.1",
 		"date-fns": "^2.29.3",
