@@ -1,0 +1,8 @@
+@import './../../../assets/css/mixins';
+.view-community {
+	&::before {
+		@include background-graded-image;
+		background-image: url('./../../../assets/images/view-community.svg');
+		bottom: 0px;
+	}
+}
