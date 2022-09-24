@@ -1,19 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
-import {
-	Collapse,
-	Navbar,
-	NavbarToggler,
-	NavbarBrand,
-	Nav,
-	NavItem,
-	Media,
-	UncontrolledDropdown,
-	DropdownToggle,
-	DropdownMenu,
-	DropdownItem
-} from 'reactstrap';
+import { NavLink } from 'react-router-dom';
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, UncontrolledPopover, PopoverBody, Button } from 'reactstrap';
 import logo from './../../assets/images/logo.png';
 import _get from 'lodash/get';
 import { GoogleLogout } from 'react-google-login';
@@ -23,7 +11,6 @@ import { removeSession } from '../../services/session/action';
 import _isEmpty from 'lodash/isEmpty';
 
 const Header = () => {
-	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { userInfo } = useSelector(({ userDetailsReducer }) => {
 		return {
@@ -41,6 +28,7 @@ const Header = () => {
 	const onFailure = (res) => {
 		console.log('onFailure: ', res);
 	};
+
 	if (_isEmpty(userInfo)) return null;
 	return (
 		<div className="kt-header">
@@ -62,43 +50,45 @@ const Header = () => {
 							</NavLink>
 						</NavItem>
 						<NavItem>
+							<UncontrolledPopover placement="bottom" target="PopoverLegacy" trigger="legacy">
+								<PopoverBody className="kt-profile-popover">
+									<div className="kt-profile-body">
+										<div className="kt-logo-section">
+											<img
+												alt="Sample"
+												className="kt-user-logo my-2"
+												src={userInfo.profilePicture}
+											/>
+										</div>
+										<span className="fs-5">{userInfo.name}</span>
+										<span className="fs-6 text-muted">{userInfo.email}</span>
+										<span>Time Wallet : {userInfo.wallet} hr(s)</span>
+										<GoogleLogout
+											clientId={clientId}
+											render={(renderProps) => (
+												<Button className="mt-3" onClick={renderProps.onClick}>
+													Logout
+												</Button>
+											)}
+											buttonText="Logout"
+											onLogoutSuccess={logout}
+											onFailure={onFailure}
+										/>
+									</div>
+								</PopoverBody>
+							</UncontrolledPopover>
 							<div className="kt-media">
 								<div className="kt-body">
 									<div className="mr-2">{userInfo.name}</div>
 								</div>
-								<UncontrolledDropdown setActiveFromChild>
-									<DropdownToggle className="nav-link p-0" tag="a">
-										<div className="kt-right">
-											<img
-												src={userInfo.profilePicture}
-												className="rounded-circle shadow-sm kt-user-logo"
-												alt="Avatar"
-												referrerPolicy="no-referrer"
-											/>
-										</div>
-									</DropdownToggle>
-									<DropdownMenu>
-										<DropdownItem
-											tag="a"
-											onClick={() => {
-												navigate('profile');
-											}}
-										>
-											Profile
-										</DropdownItem>
-										<DropdownItem tag="a">
-											<GoogleLogout
-												clientId={clientId}
-												render={(renderProps) => (
-													<div onClick={renderProps.onClick}>Logout</div>
-												)}
-												buttonText="Logout"
-												onLogoutSuccess={logout}
-												onFailure={onFailure}
-											/>
-										</DropdownItem>
-									</DropdownMenu>
-								</UncontrolledDropdown>
+								<div className="kt-right" id="PopoverLegacy">
+									<img
+										src={userInfo.profilePicture}
+										className="rounded-circle shadow-sm kt-user-logo"
+										alt="Avatar"
+										referrerPolicy="no-referrer"
+									/>
+								</div>
 							</div>
 						</NavItem>
 					</Nav>
