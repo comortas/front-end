@@ -13,7 +13,8 @@ import {
 	Button,
 	Modal,
 	ModalHeader,
-	ModalBody
+	ModalBody,
+	FormFeedback
 } from 'reactstrap';
 import './style.scss';
 import formImg from './../../../assets/images/add.svg';
@@ -31,9 +32,8 @@ const CreateCommunity = () => {
 		};
 	});
 	const [ locationModal, setLocationModal ] = useState(false);
-	const { handleChange, handleSubmit, setFieldValue, values } = useFormik({
+	const { handleChange, handleSubmit, setFieldValue, values, errors } = useFormik({
 		initialValues: {
-			type: 'event', // event | help
 			location: '',
 			name: '',
 			description: '',
@@ -42,12 +42,23 @@ const CreateCommunity = () => {
 			createdBy: userInfo._id,
 			admin: userInfo._id
 		},
+		validate: (values) => {
+			let errors = {};
+			if (!values.name) {
+				errors.name = true;
+			}
+			if (!values.description) {
+				errors.description = true;
+			}
+			if (!values.location) {
+				errors.location = true;
+			}
+			return errors;
+		},
 		onSubmit: (values) => {
-			console.log(values);
 			API_CALL('post', 'community', values, null, ({ data, status }) => {
 				console.log('data: ', data);
 				if (status === 200) {
-					console.log('status: ', status);
 					navigate('community');
 				}
 			});
@@ -87,7 +98,13 @@ const CreateCommunity = () => {
 									<Form onSubmit={handleSubmit}>
 										<FormGroup>
 											<Label>Title</Label>
-											<Input name="name" onChange={handleChange} value={values.name} />
+											<Input
+												name="name"
+												onChange={handleChange}
+												value={values.name}
+												invalid={errors.name}
+											/>
+											{errors.name && <FormFeedback>Required</FormFeedback>}
 										</FormGroup>
 										<FormGroup>
 											<Label>Description</Label>
@@ -96,7 +113,9 @@ const CreateCommunity = () => {
 												name="description"
 												onChange={handleChange}
 												value={values.description}
+												invalid={errors.description}
 											/>
+											{errors.description && <FormFeedback>Required</FormFeedback>}
 										</FormGroup>
 										<FormGroup>
 											<Label>Location</Label>
@@ -105,10 +124,12 @@ const CreateCommunity = () => {
 												disabled
 												onChange={handleChange}
 												value={values.location}
+												invalid={errors.location}
 											/>
 											<Button onClick={toggle} className="mt-2">
 												Add Location
 											</Button>
+											{errors.location && <FormFeedback>Required</FormFeedback>}
 											<Modal isOpen={locationModal} toggle={toggle} fullscreen>
 												<ModalHeader toggle={toggle}>Add Location</ModalHeader>
 												<ModalBody>

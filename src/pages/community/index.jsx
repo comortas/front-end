@@ -10,6 +10,8 @@ import './style.scss';
 import API_CALL from '../../services';
 import Empty from '../../components/no-data';
 import CardLoader from '../../components/loader/card-loader';
+import createCommunityImage from './../../assets/images/create-community.svg';
+
 const Community = () => {
 	const { communities, loader, userInfo } = useSelector(({ communityReducer, userDetailsReducer }) => ({
 		communities: communityReducer.response,
@@ -48,15 +50,17 @@ const Community = () => {
 			</Nav>
 			<TabContent activeTab={activeTab} className="py-3">
 				<TabPane tabId={1}>
-					<Row>
-						{loader ? (
-							<CardLoader />
-						) : _isEmpty(communities) ? (
-							<Empty />
-						) : (
-							communities.map((data, index) => <CommunityCard key={index} {...data} />)
-						)}
-					</Row>
+					{loader ? (
+						<CardLoader />
+					) : (
+						<Row>
+							{_isEmpty(communities) ? (
+								<Empty />
+							) : (
+								communities.map((data, index) => <CommunityCard key={index} {...data} />)
+							)}
+						</Row>
+					)}
 				</TabPane>
 				<TabPane tabId={2}>
 					<Row>
@@ -64,6 +68,8 @@ const Community = () => {
 							<Card className="create-card">
 								<CardBody>
 									<div className="text-center">
+										<img src={createCommunityImage} width="100%" className="mb-4" />
+										<br />
 										{mineCommunity.length > 0 ? (
 											'New community can be created'
 										) : (
