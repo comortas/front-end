@@ -8,6 +8,8 @@ import _isEmpty from 'lodash/isEmpty';
 import Empty from '../../../components/no-data';
 import CardLoader from '../../../components/loader/card-loader';
 import TitleLoader from '../../../components/loader/title-loader';
+import './style.scss';
+import { useSelector } from 'react-redux';
 
 const ViewCommunity = () => {
 	const { id } = useParams();
@@ -15,6 +17,11 @@ const ViewCommunity = () => {
 	const [ titleLoader, setTitleLoader ] = useState(true);
 	const [ events, setEvents ] = useState([]);
 	const [ loader, setLoader ] = useState(true);
+	const { userInfo } = useSelector(({ userDetailsReducer }) => {
+		return {
+			userInfo: _get(userDetailsReducer, 'response.user', false)
+		};
+	});
 	useEffect(
 		() => {
 			API_CALL('get', `community?id=${id}`, null, null, ({ data, status }) => {
@@ -49,9 +56,11 @@ const ViewCommunity = () => {
 				<Col className="mt-3">
 					<h3 className="d-flex align-items-center justify-content-between">
 						Events
-						<NavLink to={`/createevent/${id}`}>
-							<Button color="primary">Create</Button>
-						</NavLink>
+						{details.admin === userInfo._id && (
+							<NavLink to={`/createevent/${id}`}>
+								<Button color="primary">Create</Button>
+							</NavLink>
+						)}
 					</h3>
 				</Col>
 			</Row>

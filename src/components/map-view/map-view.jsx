@@ -36,15 +36,15 @@ const MapView = ({ config }) => {
 	useEffect(
 		() => {
 			if (location && mapRef && mapRef.current) {
-				setMap(
-					new google.maps.Map(mapRef.current, {
-						center: location,
-						zoom: 15,
-						mapTypeControlOptions: {
-							mapTypeIds: []
-						}
-					})
-				);
+				// setMap(
+				// 	new google.maps.Map(mapRef.current, {
+				// 		center: location,
+				// 		zoom: 15,
+				// 		mapTypeControlOptions: {
+				// 			mapTypeIds: []
+				// 		}
+				// 	})
+				// );
 			}
 		},
 		[ location, mapRef ]
