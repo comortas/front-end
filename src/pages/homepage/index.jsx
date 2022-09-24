@@ -9,7 +9,7 @@ import Empty from '../../components/no-data';
 import { format } from 'date-fns';
 import poster from '../../assets/images/event-poster.jpg';
 import MapView from '../../components/map-view/map-view';
-import Loader from './loader';
+import CardLoader from '../../components/loader/card-loader';
 const Homepage = () => {
 	const dispatch = useDispatch();
 	const { events, eventsLoader } = useSelector(({ eventReducer }) => ({
@@ -66,7 +66,7 @@ const Homepage = () => {
 			<TabContent activeTab={activeTab} className="py-3">
 				<TabPane tabId={1}>
 					{eventsLoader ? (
-						<Loader />
+						<CardLoader />
 					) : (
 						<Row>
 							{_isEmpty(events) ? (

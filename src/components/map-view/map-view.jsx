@@ -4,11 +4,13 @@ import _isEmpty from 'lodash/isEmpty';
 import './style.scss';
 
 const MapView = ({ config }) => {
-	const { events, selectedEventCallBack } = config;
+	const { events, selectedEventCallBack, singleView } = config;
 	const mapRef = useRef(null);
 	const [ location, setLocation ] = useState();
 	useEffect(() => {
-		handlePermission();
+		singleView
+			? setLocation({ lat: parseFloat(events[0].latitude), lng: parseFloat(events[0].longitude) })
+			: handlePermission();
 	}, []);
 	const handlePermission = async () => {
 		if (navigator.geolocation) {

@@ -9,8 +9,9 @@ import CommunityCard from './components/community-card';
 import './style.scss';
 import API_CALL from '../../services';
 import Empty from '../../components/no-data';
+import CardLoader from '../../components/loader/card-loader';
 const Community = () => {
-	const { communities, userInfo } = useSelector(({ communityReducer, userDetailsReducer }) => ({
+	const { communities, loader, userInfo } = useSelector(({ communityReducer, userDetailsReducer }) => ({
 		communities: communityReducer.response,
 		loader: communityReducer.requesting,
 		userInfo: _get(userDetailsReducer, 'response.user', false)
@@ -48,7 +49,9 @@ const Community = () => {
 			<TabContent activeTab={activeTab} className="py-3">
 				<TabPane tabId={1}>
 					<Row>
-						{_isEmpty(communities) ? (
+						{loader ? (
+							<CardLoader />
+						) : _isEmpty(communities) ? (
 							<Empty />
 						) : (
 							communities.map((data, index) => <CommunityCard key={index} {...data} />)

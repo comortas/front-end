@@ -13,7 +13,8 @@ import {
 	Button,
 	Modal,
 	ModalHeader,
-	ModalBody
+	ModalBody,
+	FormFeedback
 } from 'reactstrap';
 import Calendar from 'react-widgets/Calendar';
 import TimeKeeper from 'react-timekeeper';
@@ -35,7 +36,7 @@ const SeekForHelp = () => {
 	});
 	const navigate = useNavigate();
 	const [ locationModal, setLocationModal ] = useState(false);
-	const { handleChange, handleSubmit, setFieldValue, values } = useFormik({
+	const { handleChange, handleSubmit, setFieldValue, values, errors } = useFormik({
 		initialValues: {
 			type: 'help',
 			location: '',
@@ -50,6 +51,34 @@ const SeekForHelp = () => {
 			noOfVolunteers: '',
 			createdBy: userInfo._id,
 			admin: userInfo._id
+		},
+		validate: (values) => {
+			let errors = {};
+			if (!values.name) {
+				errors.name = true;
+			}
+			if (!values.description) {
+				errors.description = true;
+			}
+			if (!values.date) {
+				errors.date = true;
+			}
+			if (!values.time) {
+				errors.time = true;
+			}
+			if (!values.duration) {
+				errors.duration = true;
+			}
+			if (!values.poc) {
+				errors.poc = true;
+			}
+			if (!values.noOfVolunteers) {
+				errors.noOfVolunteers = true;
+			}
+			if (!values.location) {
+				errors.location = true;
+			}
+			return errors;
 		},
 		onSubmit: (values) => {
 			let payload = Object.assign({}, values);
@@ -103,7 +132,13 @@ const SeekForHelp = () => {
 									<Form onSubmit={handleSubmit}>
 										<FormGroup>
 											<Label>Title</Label>
-											<Input name="name" onChange={handleChange} value={values.name} />
+											<Input
+												name="name"
+												onChange={handleChange}
+												value={values.name}
+												invalid={errors.name}
+											/>
+											{errors.name && <FormFeedback>Required</FormFeedback>}
 										</FormGroup>
 										<FormGroup>
 											<Label>Description</Label>
@@ -112,7 +147,9 @@ const SeekForHelp = () => {
 												name="description"
 												onChange={handleChange}
 												value={values.description}
+												invalid={errors.description}
 											/>
+											{errors.description && <FormFeedback>Required</FormFeedback>}
 										</FormGroup>
 										<FormGroup>
 											<Label>Date</Label>
@@ -140,7 +177,9 @@ const SeekForHelp = () => {
 												name="duration"
 												onChange={handleChange}
 												value={values.duration}
+												invalid={errors.duration}
 											/>
+											{errors.duration && <FormFeedback>Required</FormFeedback>}
 										</FormGroup>
 										<FormGroup>
 											<Label>Location</Label>
@@ -149,10 +188,12 @@ const SeekForHelp = () => {
 												disabled
 												onChange={handleChange}
 												value={values.location}
+												invalid={errors.location}
 											/>
 											<Button onClick={toggle} className="mt-2">
 												Add Location
 											</Button>
+											{errors.location && <FormFeedback>Required</FormFeedback>}
 											<Modal isOpen={locationModal} toggle={toggle} fullscreen>
 												<ModalHeader toggle={toggle}>Add Location</ModalHeader>
 												<ModalBody>
@@ -167,7 +208,9 @@ const SeekForHelp = () => {
 												name="poc"
 												onChange={handleChange}
 												value={values.poc}
+												invalid={errors.poc}
 											/>
+											{errors.poc && <FormFeedback>Required</FormFeedback>}
 										</FormGroup>
 										<FormGroup>
 											<Label>No of Volunteer(s)</Label>
@@ -176,7 +219,9 @@ const SeekForHelp = () => {
 												name="noOfVolunteers"
 												onChange={handleChange}
 												value={values.noOfVolunteers}
+												invalid={errors.noOfVolunteers}
 											/>
+											{errors.noOfVolunteers && <FormFeedback>Required</FormFeedback>}
 										</FormGroup>
 										<FormGroup>
 											<Label>

@@ -13,7 +13,8 @@ import {
 	Button,
 	Modal,
 	ModalHeader,
-	ModalBody
+	ModalBody,
+	FormFeedback
 } from 'reactstrap';
 import Calendar from 'react-widgets/Calendar';
 import TimeKeeper from 'react-timekeeper';
@@ -47,7 +48,7 @@ const CreateEvent = () => {
 		[ id ]
 	);
 	const [ locationModal, setLocationModal ] = useState(false);
-	const { handleChange, handleSubmit, setFieldValue, values } = useFormik({
+	const { handleChange, handleSubmit, setFieldValue, values, errors } = useFormik({
 		initialValues: {
 			type: 'event',
 			location: '',
@@ -63,6 +64,34 @@ const CreateEvent = () => {
 			createdBy: userInfo._id,
 			admin: userInfo._id,
 			communityId: id
+		},
+		validate: (values) => {
+			let errors = {};
+			if (!values.name) {
+				errors.name = true;
+			}
+			if (!values.description) {
+				errors.description = true;
+			}
+			if (!values.date) {
+				errors.date = true;
+			}
+			if (!values.time) {
+				errors.time = true;
+			}
+			if (!values.duration) {
+				errors.duration = true;
+			}
+			if (!values.poc) {
+				errors.poc = true;
+			}
+			if (!values.noOfVolunteers) {
+				errors.noOfVolunteers = true;
+			}
+			if (!values.location) {
+				errors.location = true;
+			}
+			return errors;
 		},
 		onSubmit: (values) => {
 			let payload = Object.assign({}, values);
@@ -118,7 +147,13 @@ const CreateEvent = () => {
 									<Form onSubmit={handleSubmit}>
 										<FormGroup>
 											<Label>Title</Label>
-											<Input name="name" onChange={handleChange} value={values.name} />
+											<Input
+												name="name"
+												onChange={handleChange}
+												value={values.name}
+												invalid={errors.name}
+											/>
+											{errors.name && <FormFeedback>Required</FormFeedback>}
 										</FormGroup>
 										<FormGroup>
 											<Label>Description</Label>
@@ -127,7 +162,9 @@ const CreateEvent = () => {
 												name="description"
 												onChange={handleChange}
 												value={values.description}
+												invalid={errors.description}
 											/>
+											{errors.description && <FormFeedback>Required</FormFeedback>}
 										</FormGroup>
 										<FormGroup>
 											<Label>Date</Label>
@@ -155,7 +192,9 @@ const CreateEvent = () => {
 												name="duration"
 												onChange={handleChange}
 												value={values.duration}
+												invalid={errors.duration}
 											/>
+											{errors.duration && <FormFeedback>Required</FormFeedback>}
 										</FormGroup>
 										<FormGroup>
 											<Label>Location</Label>
@@ -164,10 +203,12 @@ const CreateEvent = () => {
 												disabled
 												onChange={handleChange}
 												value={values.location}
+												invalid={errors.location}
 											/>
 											<Button onClick={toggle} className="mt-2">
 												Add Location
 											</Button>
+											{errors.location && <FormFeedback>Required</FormFeedback>}
 											<Modal isOpen={locationModal} toggle={toggle} fullscreen>
 												<ModalHeader toggle={toggle}>Add Location</ModalHeader>
 												<ModalBody>
@@ -182,7 +223,9 @@ const CreateEvent = () => {
 												name="poc"
 												onChange={handleChange}
 												value={values.poc}
+												invalid={errors.poc}
 											/>
+											{errors.poc && <FormFeedback>Required</FormFeedback>}
 										</FormGroup>
 										<FormGroup>
 											<Label>No of Volunteer(s)</Label>
@@ -191,7 +234,9 @@ const CreateEvent = () => {
 												name="noOfVolunteers"
 												onChange={handleChange}
 												value={values.noOfVolunteers}
+												invalid={errors.noOfVolunteers}
 											/>
+											{errors.noOfVolunteers && <FormFeedback>Required</FormFeedback>}
 										</FormGroup>
 										<FormGroup>
 											<Label>

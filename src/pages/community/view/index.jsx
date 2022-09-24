@@ -4,19 +4,27 @@ import { Button, Col, Container, Row } from 'reactstrap';
 import API_CALL from '../../../services';
 import EventCard from '../../../components/event-card/event-card';
 import { NavLink } from 'react-router-dom';
+import _isEmpty from 'lodash/isEmpty';
+import Empty from '../../../components/no-data';
+import CardLoader from '../../../components/loader/card-loader';
+import TitleLoader from '../../../components/loader/title-loader';
 
 const ViewCommunity = () => {
 	const { id } = useParams();
 	const [ details, setDetails ] = useState({});
+	const [ titleLoader, setTitleLoader ] = useState(true);
 	const [ events, setEvents ] = useState([]);
+	const [ loader, setLoader ] = useState(true);
 	useEffect(
 		() => {
 			API_CALL('get', `community?id=${id}`, null, null, ({ data, status }) => {
+				setTitleLoader(false);
 				if (status === 200) {
 					setDetails(data);
 				}
 			});
 			API_CALL('get', `activity/list?communityid=${id}`, null, null, ({ data, status }) => {
+				setLoader(false);
 				if (status === 200) {
 					setEvents(data);
 				}
@@ -25,13 +33,17 @@ const ViewCommunity = () => {
 		[ id ]
 	);
 	return (
-		<Container fluid="xl">
+		<Container fluid="xl" className="view-community">
 			<Row>
-				<Col className="mt-3">
-					<h1 className="kt-title">{details.name}</h1>
-					<h2 className="mt-3 text-muted">{details.description}</h2>
-					<p>{details.location}</p>
-				</Col>
+				{titleLoader ? (
+					<TitleLoader />
+				) : (
+					<Col className="mt-3">
+						<h1 className="kt-title">{details.name}</h1>
+						<h2 className="mt-3 text-muted">{details.description}</h2>
+						<p>{details.location}</p>
+					</Col>
+				)}
 			</Row>
 			<Row>
 				<Col className="mt-3">
@@ -43,13 +55,21 @@ const ViewCommunity = () => {
 					</h3>
 				</Col>
 			</Row>
-			<Row>
-				{events.map((data, index) => (
-					<Col key={index} xs={12} md={6} lg={4} className="mb-3">
-						<EventCard data={data} />{' '}
-					</Col>
-				))}
-			</Row>
+			{loader ? (
+				<CardLoader />
+			) : (
+				<Row>
+					{_isEmpty(events) ? (
+						<Empty message={'No events'} />
+					) : (
+						events.map((data, index) => (
+							<Col key={index} xs={12} md={6} lg={4} className="mb-3">
+								<EventCard data={data} />
+							</Col>
+						))
+					)}
+				</Row>
+			)}
 		</Container>
 	);
 };
