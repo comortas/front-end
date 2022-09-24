@@ -23,6 +23,7 @@ import Maps from '../../../components/maps';
 import API_CALL from '../../../services';
 import { useSelector } from 'react-redux';
 import _get from 'lodash/get';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const CreateCommunity = () => {
 	const navigate = useNavigate();
@@ -127,7 +128,7 @@ const CreateCommunity = () => {
 												invalid={errors.location}
 											/>
 											<Button onClick={toggle} className="mt-2">
-												Add Location
+												<FontAwesomeIcon icon={('fas', 'location-dot')} /> Add Location
 											</Button>
 											{errors.location && <FormFeedback>Required</FormFeedback>}
 											<Modal isOpen={locationModal} toggle={toggle} fullscreen>

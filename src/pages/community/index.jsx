@@ -11,6 +11,7 @@ import API_CALL from '../../services';
 import Empty from '../../components/no-data';
 import CardLoader from '../../components/loader/card-loader';
 import createCommunityImage from './../../assets/images/create-community.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Community = () => {
 	const { communities, loader, userInfo } = useSelector(({ communityReducer, userDetailsReducer }) => ({
@@ -39,12 +40,12 @@ const Community = () => {
 			<Nav pills>
 				<NavItem>
 					<NavLink className={activeTab == 1 ? 'active' : ''} onClick={() => setActive(1)}>
-						All
+						<FontAwesomeIcon icon={[ 'fas', 'users' ]} /> All
 					</NavLink>
 				</NavItem>
 				<NavItem>
 					<NavLink className={activeTab == 2 ? 'active' : ''} onClick={() => setActive(2)}>
-						Mine
+						<FontAwesomeIcon icon={[ 'fas', 'user' ]} /> Mine
 					</NavLink>
 				</NavItem>
 			</Nav>

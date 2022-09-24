@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import poster from '../../assets/images/event-poster.jpg';
 import MapView from '../../components/map-view/map-view';
 import CardLoader from '../../components/loader/card-loader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const Homepage = () => {
 	const dispatch = useDispatch();
 	const { events, eventsLoader } = useSelector(({ eventReducer }) => ({
@@ -54,12 +55,12 @@ const Homepage = () => {
 			<Nav pills>
 				<NavItem>
 					<NavLink className={activeTab == 1 ? 'active' : ''} onClick={() => setActive(1)}>
-						Card
+						<FontAwesomeIcon icon={[ 'fas', 'grip-vertical' ]} /> Card
 					</NavLink>
 				</NavItem>
 				<NavItem>
 					<NavLink className={activeTab == 2 ? 'active' : ''} onClick={() => setActive(2)}>
-						Map
+						<FontAwesomeIcon icon={[ 'fas', 'fa-location-dot' ]} /> Map
 					</NavLink>
 				</NavItem>
 			</Nav>

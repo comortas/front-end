@@ -3,5 +3,6 @@
 	&::before {
 		@include background-graded-image;
 		background-image: url('../../assets/images/seek-for-help.svg');
+		background-position-y: top;
 	}
 }

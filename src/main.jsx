@@ -7,6 +7,7 @@ import store, { persistor } from './store';
 import App from './App.jsx';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import './utils/fontawesome';
 
 const container = document.getElementById('app');
 const Root = createRoot(container);
